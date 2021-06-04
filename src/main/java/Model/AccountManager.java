@@ -27,9 +27,16 @@ public class AccountManager extends Manager implements AccountDao {
         List<Account> accounts = new ArrayList<Account>();
         while (set.next()) {
           Account account = new Account();
-
+          account.setEmail(set.getString("email"));
+          account.setAddress(set.getString("address"));
+          account.setUsername(set.getString("username"));
+          account.setPassword(set.getString("password"));
+          account.setLastName(set.getString("lastname"));
+          account.setFirstName(set.getString("firstname"));
+          account.setAdmin(set.getBoolean("admin"));
           accounts.add(account);
         }
+        set.close();
         return accounts;
       }
     }
@@ -42,7 +49,18 @@ public class AccountManager extends Manager implements AccountDao {
 
   @Override
   public Integer createAccount(Account account) throws SQLException {
-    return null;
+    try (Connection conn = source.getConnection()) {
+      try (PreparedStatement ps = conn.prepareStatement(QUERY.insertAccounts())) {
+        ps.setString(1, account.getAddress());
+        ps.setString(2, account.getUsername());
+        ps.setString(3, account.getPassword());
+        ps.setString(4, account.getFirstName());
+        ps.setString(5, account.getLastName());
+        ps.setString(6, account.getEmail());
+        ps.setBoolean(7, account.getAdmin());
+        return ps.executeUpdate();
+      }
+    }
   }
 
   @Override

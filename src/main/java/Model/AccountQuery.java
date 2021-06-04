@@ -11,7 +11,7 @@ public class AccountQuery extends TableQuery {
   }
 
   String selectAccount() {
-    return String.format("SELECT * FROM %s WHERE email=?;", table);
+    return String.format("SELECT * FROM %s WHERE email=? AND password=SHA1(?);", table);
   }
 
   String insertAccounts() {
