@@ -8,12 +8,21 @@ import java.util.List;
 
 public class Account {
 
+  private int id;
   private String address, username, password, firstName, lastName, email;
   private Boolean admin;
   private List<Purchase> purchases;
 
   public Account() {
     super();
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getAddress() {
@@ -79,11 +88,11 @@ public class Account {
     this.admin = admin;
   }
 
-  public List<Purchase> getOrders() {
+  public List<Purchase> getPurchases() {
     return purchases;
   }
 
-  public void setOrders(List<Purchase> purchases) {
+  public void setPurchases(List<Purchase> purchases) {
     this.purchases = purchases;
   }
 }
