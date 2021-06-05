@@ -1,9 +1,12 @@
 package Model;
 
+import java.util.List;
+
 public class Category {
 
   private int id;
-  private String catName, description;
+  private String label;
+  private List<Product> products;
 
   public Category() {
     super();
@@ -17,19 +20,19 @@ public class Category {
     this.id = id;
   }
 
-  public String getCatName() {
-    return catName;
+  public String getLabel() {
+    return label;
   }
 
-  public void setCatName(String catName) {
-    this.catName = catName;
+  public void setLabel(String label) {
+    this.label = label;
   }
 
-  public String getDescription() {
-    return description;
+  public List<Product> getProducts() {
+    return products;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setProducts(List<Product> products) {
+    this.products = products;
   }
 }

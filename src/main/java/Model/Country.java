@@ -1,9 +1,12 @@
 package Model;
 
+import java.util.List;
+
 public class Country {
 
   private int id;
-  private String countryName, description;
+  private String label;
+  private List<Product> products;
 
   public Country() {
     super();
@@ -17,19 +20,19 @@ public class Country {
     this.id = id;
   }
 
-  public String getCountryName() {
-    return countryName;
+  public String getLabel() {
+    return label;
   }
 
-  public void setCountryName(String countryName) {
-    this.countryName = countryName;
+  public void setLabel(String label) {
+    this.label = label;
   }
 
-  public String getDescription() {
-    return description;
+  public List<Product> getProducts() {
+    return products;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setProducts(List<Product> products) {
+    this.products = products;
   }
 }

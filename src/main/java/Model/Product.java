@@ -4,7 +4,7 @@ public class Product {
 
   private int id, quantity;
   private double price;
-  private String prodName, description, image;
+  private String prodName, label, image;
   private Country country;
   private Category category;
 
@@ -44,12 +44,12 @@ public class Product {
     this.prodName = prodName;
   }
 
-  public String getDescription() {
-    return description;
+  public String getLabel() {
+    return label;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setLabel(String label) {
+    this.label = label;
   }
 
   public String getImage() {

@@ -4,29 +4,39 @@ import java.time.LocalDate;
 
 public class Purchase {
 
-  private int code, panCard;
+  private int id;
+  private double total;
+  private Long panCard;
   private String cardCircuit;
   private LocalDate created;
   private Account account;
-  private Cart card;
+  private Cart cart;
 
   public Purchase() {
     super();
   }
 
-  public int getCode() {
-    return code;
+  public int getId() {
+    return id;
   }
 
-  public void setCode(int code) {
-    this.code = code;
+  public void setId(int id) {
+    this.id = id;
   }
 
-  public int getPanCard() {
+  public double getTotal() {
+    return total;
+  }
+
+  public void setTotal(double total) {
+    this.total = total;
+  }
+
+  public Long getPanCard() {
     return panCard;
   }
 
-  public void setPanCard(int panCard) {
+  public void setPanCard(Long panCard) {
     this.panCard = panCard;
   }
 
@@ -46,12 +56,12 @@ public class Purchase {
     this.account = account;
   }
 
-  public Cart getCard() {
-    return card;
+  public Cart getCart() {
+    return cart;
   }
 
-  public void setCard(Cart card) {
-    this.card = card;
+  public void setCart(Cart cart) {
+    this.cart = cart;
   }
 
   public LocalDate getCreated() {
