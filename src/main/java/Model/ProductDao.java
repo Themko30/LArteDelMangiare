@@ -9,6 +9,8 @@ public interface ProductDao<E extends Exception> {
 
   Optional<Product> fetchProduct(int id) throws E;
 
+  Optional<Product> fetchProductByLabel(String label) throws E;
+
   boolean createProduct(Product product) throws E;
 
   boolean updateProduct(Product product) throws E;

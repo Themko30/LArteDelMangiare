@@ -52,6 +52,23 @@ public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
   }
 
   @Override
+  public Optional<Product> fetchProductByLabel(String label) throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      QueryBuilder queryBuilder = new QueryBuilder("products", "pro");
+      String query = queryBuilder.select().where("pro.label=?").generateQuery();
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setString(1, label);
+        ResultSet set = ps.executeQuery();
+        Product product = null;
+        if (set.next()) {
+          product = new ProductExtractor().extract(set);
+        }
+        return Optional.ofNullable(product);
+      }
+    }
+  }
+
+  @Override
   public boolean createProduct(Product product) throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("products", "pro");

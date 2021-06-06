@@ -10,6 +10,18 @@ public class Cart {
     this.items = items;
   }
 
+  public List<CartItem> getItems() {
+    return items;
+  }
+
+  public void setItems(List<CartItem> items) {
+    this.items = items;
+  }
+
+  public boolean addProducts(Product product, int quantity) {
+    return items.add(new CartItem(product, quantity));
+  }
+
   public double total() {
     double total = 0;
     for (CartItem item : items) {
