@@ -89,7 +89,7 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
       String query = PurchaseQuery.createPurchase();
       String query2 = PurchaseQuery.insertCart();
       try (PreparedStatement ps = conn.prepareStatement(query);
-          PreparedStatement psAssoc = conn.prepareStatement(query2); ) {
+          PreparedStatement psAssoc = conn.prepareStatement(query2)) {
         int rows = ps.executeUpdate();
         int total = rows;
         for (CartItem item : purchase.getCart().getItems()) {
@@ -98,7 +98,7 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
           psAssoc.setInt(3, item.getQuantity());
           total += psAssoc.executeUpdate();
         }
-        if (total == (rows + purchase.entries())) { // DA VEDERE LA RISPOSTA DEL PROF
+        if (total == (rows + purchase.entries())) {
           conn.commit();
           conn.setAutoCommit(true);
           return true;

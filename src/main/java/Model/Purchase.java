@@ -72,5 +72,7 @@ public class Purchase {
     this.created = created;
   }
 
-  public int entries() {}
+  public int entries() {
+    return cart.getItems().size();
+  }
 }
