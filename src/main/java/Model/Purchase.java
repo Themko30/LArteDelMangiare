@@ -71,4 +71,6 @@ public class Purchase {
   public void setCreated(LocalDate created) {
     this.created = created;
   }
+
+  public int entries() {}
 }

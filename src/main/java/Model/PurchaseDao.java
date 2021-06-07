@@ -5,9 +5,9 @@ import java.util.Optional;
 
 public interface PurchaseDao<E extends Exception> {
 
-  List<Purchase> fetchPurchases(int start, int end) throws E;
+  List<Purchase> fetchPurchases(Paginator paginator) throws E;
 
-  List<Purchase> fetchPurchasesWithProducts(int accountId) throws E;
+  List<Purchase> fetchPurchasesWithProducts(int accountId, Paginator paginator) throws E;
 
   Optional<Purchase> fetchPurchase(int id) throws E;
 

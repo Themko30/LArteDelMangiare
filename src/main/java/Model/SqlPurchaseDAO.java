@@ -1,7 +1,6 @@
 package Model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,13 +18,12 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
   }
 
   @Override
-  public List<Purchase> fetchPurchases(int start, int end) throws SQLException {
+  public List<Purchase> fetchPurchases(Paginator paginator) throws SQLException {
     try (Connection conn = source.getConnection()) {
-      QueryBuilder queryBuilder = new QueryBuilder("purchase", "pur");
-      String query = queryBuilder.select().limit(true).generateQuery();
+      String query = PurchaseQuery.fetchPurchases();
       try (PreparedStatement ps = conn.prepareStatement(query)) {
-        ps.setInt(1, start);
-        ps.setInt(2, end);
+        ps.setInt(1, paginator.getOffset());
+        ps.setInt(2, paginator.getLimit());
         ResultSet set = ps.executeQuery();
         PurchaseExtractor purchaseExtractor = new PurchaseExtractor();
         List<Purchase> purchases = new ArrayList<>();
@@ -38,22 +36,14 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
   }
 
   @Override
-  public List<Purchase> fetchPurchasesWithProducts(int accountId) throws SQLException {
+  public List<Purchase> fetchPurchasesWithProducts(int accountId, Paginator paginator)
+      throws SQLException {
     try (Connection conn = source.getConnection()) {
-      QueryBuilder queryBuilder = new QueryBuilder("purchase_products", "pp");
-      StringBuilder builder = new StringBuilder();
-      // First join clause in order to join purchase on idpurchase
-      queryBuilder.select().innerJoin("purchase", "pur").on("pp.idpurchase = pur.id");
-      // Second join clause in order to join products on idproducts
-      queryBuilder.innerJoin("products", "pro").on("pp.idpruducts = pro.id");
-      // fetching country
-      queryBuilder.outerJoin(true, "country", "cou").on("pro.country_fk = cou.id");
-      // fetching category
-      queryBuilder.outerJoin(true, "category", "cat").on("pro.category_fk = cat.id");
-      // where condition
-      queryBuilder.where(" pur.account_fk = ?");
-      try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
+      String query = PurchaseQuery.fetchPurchasesWithProducts();
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
         ps.setInt(1, accountId);
+        ps.setInt(2, paginator.getOffset());
+        ps.setInt(3, paginator.getLimit());
         ResultSet set = ps.executeQuery();
         Map<Integer, Purchase> purchaseMap = new LinkedHashMap<>();
         PurchaseExtractor purchaseExtractor = new PurchaseExtractor();
@@ -82,15 +72,11 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
   @Override
   public Optional<Purchase> fetchPurchase(int id) throws SQLException {
     try (Connection conn = source.getConnection()) {
-      QueryBuilder queryBuilder = new QueryBuilder("purchase", "pur");
-      String query = queryBuilder.select().where("pur.id=?").generateQuery();
+      String query = PurchaseQuery.fetchPurchase();
       try (PreparedStatement ps = conn.prepareStatement(query)) {
         ps.setInt(1, id);
         ResultSet set = ps.executeQuery();
-        Purchase purchase = null;
-        if (set.next()) {
-          purchase = new PurchaseExtractor().extract(set);
-        }
+        Purchase purchase = set.next() ? new PurchaseExtractor().extract(set) : null;
         return Optional.ofNullable(purchase);
       }
     }
@@ -99,15 +85,28 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
   @Override
   public boolean createPurchase(Purchase purchase) throws SQLException {
     try (Connection conn = source.getConnection()) {
-      QueryBuilder queryBuilder = new QueryBuilder("purchase", "pur");
-      queryBuilder.insert("id", "card_circuit", "pan_card", "date", "total");
-      try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
-        ps.setInt(1, purchase.getId());
-        ps.setString(2, purchase.getCardCircuit());
-        ps.setLong(3, purchase.getPanCard());
-        ps.setDate(4, Date.valueOf(purchase.getCreated()));
-        int row = ps.executeUpdate();
-        return row == 1;
+      conn.setAutoCommit(false);
+      String query = PurchaseQuery.createPurchase();
+      String query2 = PurchaseQuery.insertCart();
+      try (PreparedStatement ps = conn.prepareStatement(query);
+          PreparedStatement psAssoc = conn.prepareStatement(query2); ) {
+        int rows = ps.executeUpdate();
+        int total = rows;
+        for (CartItem item : purchase.getCart().getItems()) {
+          psAssoc.setInt(1, item.getProduct().getId());
+          psAssoc.setInt(2, purchase.getId());
+          psAssoc.setInt(3, item.getQuantity());
+          total += psAssoc.executeUpdate();
+        }
+        if (total == (rows + purchase.entries())) { // DA VEDERE LA RISPOSTA DEL PROF
+          conn.commit();
+          conn.setAutoCommit(true);
+          return true;
+        } else {
+          conn.rollback();
+          conn.setAutoCommit(true);
+          return false;
+        }
       }
     }
   }
