@@ -98,5 +98,6 @@
     <orderEntry type="library" name="Maven: org.apache.maven.shared:maven-filtering:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.sonatype.plexus:plexus-build-api:0.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-interpolation:1.13" level="project" />
+    <orderEntry type="library" exported="" name="jstl:jstl:1.2" level="project" />
   </component>
 </module>
