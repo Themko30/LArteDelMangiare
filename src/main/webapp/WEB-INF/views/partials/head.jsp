@@ -13,11 +13,11 @@
 <link rel="apple-touch-icon" href="../../../IMAGES/logoText.png">
 <link rel="apple-touch-startup-image" href="../../../IMAGES/logoText.png">
 <meta name="theme-color" content="#FD5901">
-<link href="../../../CSS/library.css" rel="stylesheet">
+<link href="CSS/library.css" rel="stylesheet">
 <c:if test="${not empty param.style}">
-    <link rel="stylesheet" href="../../../CSS/${param.style}"
+    <link rel="stylesheet" href="CSS/${param.style}"
 </c:if>
-<script src="../../../JS/library.js" defer></script>
+<script src="JS/library.js" defer></script>
 <c:if test="${not empty param.script}">
-    <script src="../../../JS/${param.script}" defer></script>
+    <script src="JS/${param.script}" defer></script>
 </c:if>
