@@ -17,26 +17,41 @@ public class AccountServlet extends HttpServlet {
     switch (path) {
       case "/":
         {
+          request
+              .getRequestDispatcher("/WEB-INF/views/crm/accounts.jsp")
+              .forward(request, response);
           break;
         }
       case "/create":
         {
+          request.getRequestDispatcher("/WEB-INF/views/crm/account.jsp").forward(request, response);
           break;
         }
       case "/show":
         {
+          request
+              .getRequestDispatcher("/WEB-INF/views/crm/accounts.jsp")
+              .forward(request, response);
           break;
         }
       case "/secret":
         {
+          request.getRequestDispatcher("/WEB-INF/views/crm/secret.jsp").forward(request, response);
           break;
         }
       case "/ signinClient":
         {
+          request.getRequestDispatcher("/WEB-INF/views/crm/signin.jsp").forward(request, response);
           break;
         }
       case "/signupClient":
         {
+          request.getRequestDispatcher("/WEB-INF/views/crm/signup.jsp").forward(request, response);
+          break;
+        }
+      case "/profile":
+        {
+          request.getRequestDispatcher("/WEB-INF/views/crm/profile.jsp").forward(request, response);
           break;
         }
       default:
