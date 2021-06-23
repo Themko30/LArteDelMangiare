@@ -1,5 +1,5 @@
 <header class="navbar grid-x align-center">
-    <div class="grid-inline align-center icons">
+    <div class="grid-inline align-center icons cell">
         <%@include file="../../../../ICONS/user.svg" %>
         <span class="shopping-cart">
         <%@ include file="../../../../ICONS/shopping_cart.svg" %>
@@ -9,21 +9,19 @@
         <%@include file="../../../../ICONS/menu.svg" %>
         </span>
     </div>
-    <nav class="menu grid-inline align-center">
+    <nav class="menu grid-x cell align-center">
         <a href="#" class="">Home</a>
         <a href="#">Products</a>
-        <a href="#" class="dropdown">
-            Categories
-            <ul class="dropdown-content">
-                <li>Hosomaki</li>
-                <li>Uramaki</li>
-                <li>Gunkan</li>
-                <li>Temaki</li>
-                <li>Onigiri</li>
-                <li>Nigiri</li>
-                <li>Sashimi</li>
-            </ul>
-        </a>
+        <div class="dropdown">
+            <button class="dropbtn">Categories
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+            </div>
+        </div>
         <a href="#">Info</a>
     </nav>
     <h3 class="title">L`Arte Del Mangiare</h3>
