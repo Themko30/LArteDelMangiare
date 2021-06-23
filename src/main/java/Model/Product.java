@@ -1,5 +1,11 @@
 package Model;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import javax.servlet.http.Part;
+
 public class Product {
 
   private int id, quantity;
@@ -74,5 +80,12 @@ public class Product {
 
   public void setCategory(Category category) {
     this.category = category;
+  }
+
+  public void writeCover(String uploadPath, Part stream) throws IOException {
+    try (InputStream fileStream = stream.getInputStream()) {
+      File file = new File(uploadPath + image);
+      Files.copy(fileStream, file.toPath());
+    }
   }
 }

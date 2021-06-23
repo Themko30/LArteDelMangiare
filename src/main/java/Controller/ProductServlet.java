@@ -5,10 +5,7 @@ import Model.Country;
 import Model.Product;
 import Model.ProductDao;
 import Model.SqlProductDAO;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -50,6 +47,7 @@ public class ProductServlet extends Controller {
           product.setPrice(Double.parseDouble(request.getParameter("price")));
           product.setProdName(request.getParameter("fullName"));
           product.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+          product.setLabel(request.getParameter("description"));
           Part filePart = request.getPart("cover");
           String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
           product.setImage(fileName);
@@ -62,10 +60,7 @@ public class ProductServlet extends Controller {
           if (productDao.createProduct(product)) {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
             String uploadRoot = getUploadPath();
-            try (InputStream fileStream = filePart.getInputStream()) {
-              File file = new File(uploadRoot + fileName);
-              Files.copy(fileStream, file.toPath());
-            }
+            product.writeCover(uploadRoot, filePart);
           } else {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Server Error");
           }
