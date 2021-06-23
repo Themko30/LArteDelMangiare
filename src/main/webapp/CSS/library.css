@@ -58,12 +58,12 @@
 input, select, textarea {
   padding: 8px;
   border-width: 1px;
-  border-color: var(--gray);
-  background-color: var(--white);
+  border-color: var(--black);
+  background-color: var(--secondary);
   color: var(--white);
   border-style: solid;
   border-radius: 0;
-  box-shadow: 0 0 10px rgba(212, 212, 212, .54);
+  /*box-shadow: 0 0 10px rgba(212, 212, 212, .54);*/
 }
 
 input:focus, textarea:focus, select:focus {
@@ -140,7 +140,7 @@ button.primary:hover {
 
 button.secondary {
   background-color: var(--secondary);
-  color: var(--white);
+  color: var(--black);
 }
 
 button.secondary:hover {
@@ -149,7 +149,7 @@ button.secondary:hover {
 
 .table {
   border-collapse: collapse;
-  background-color: var(--black)
+  background-color: var(--secondary)
 }
 
 .table > thead {
@@ -190,7 +190,7 @@ button.secondary:hover {
 }
 
 @media screen and (min-width: 769px) {
-  .w10 {
+  .w50 {
     flex-basis: 10%;
   }
 
@@ -202,7 +202,7 @@ button.secondary:hover {
     flex-basis: 25%
   }
 
-  .w40 {
+  .w50 {
     flex-basis: 40%
   }
 

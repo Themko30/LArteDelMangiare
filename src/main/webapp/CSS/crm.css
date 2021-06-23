@@ -17,6 +17,10 @@
   padding: 1rem
 }
 
+.menu > img {
+  cursor: pointer;
+}
+
 .sidebar {
   flex-basis: 300px;
   transition: all .3s ease-in-out;
@@ -41,8 +45,8 @@
 }
 
 .info {
-  text-align: right;
-  font-family: "Roboto";
+  text-align: left;
+  font-family: "Roboto", serif;
   font-style: italic;
   font-weight: normal;
   padding-right: 1rem;

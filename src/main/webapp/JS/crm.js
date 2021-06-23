@@ -6,3 +6,8 @@ hamburger.addEventListener("click", function () {
   sidebar.classList.toggle("collapse");
   content.classList.toggle('full-width');
 })
+
+const homeImg = document.getElementsByClassName('menu')[0].firstElementChild;
+homeImg.addEventListener("click", function () {
+  window.location.href = '/LArteDelMangiare_war_exploded/crm/dashboard';
+})

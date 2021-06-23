@@ -8,5 +8,7 @@
 </head>
 <body>
 <% response.sendRedirect("./accounts/secret"); %>
+<img src="/LArteDelMangiare_war_exploded/covers/california.png" alt="No text">
+
 </body>
 </html>

@@ -19,7 +19,7 @@
 
 <c:if test="${not empty param.styles}">
     <c:forTokens items="${param.styles}" delims="," var="style">
-        <link rel="stylesheet" href="${context}/CSS/${style}.css"
+        <link href="${context}/CSS/${style}.css" rel="stylesheet">
     </c:forTokens>
 </c:if>
 

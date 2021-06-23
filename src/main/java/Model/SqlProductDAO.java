@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
 
-  protected SqlProductDAO(DataSource source) {
+  public SqlProductDAO(DataSource source) {
     super(source);
   }
 
