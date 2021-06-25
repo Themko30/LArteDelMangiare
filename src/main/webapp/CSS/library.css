@@ -187,12 +187,18 @@ button.secondary:hover {
 }
 
 .paginator > li {
-  border: 1px solid;
+  border: 1px solid var(--black);
   padding: .5rem;
+  background-color: var(--primary)
 }
 
 .paginator > li > a {
   text-decoration: none;
+  color: var(--black)
+}
+
+.paginator > li:hover {
+  filter: brightness(150%);
 }
 
 .notification {

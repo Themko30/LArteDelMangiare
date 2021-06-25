@@ -77,6 +77,17 @@
   cursor: pointer;
 }
 
+.products-table a {
+  text-decoration: none;
+  color: var(--black);
+  padding: .5rem;
+}
+
+.products-table a:hover {
+  filter: brightness(150%);
+  color: var(--primary);
+}
+
 @media screen and (min-width: 769px) {
   .topbar > .account {
     display: block;

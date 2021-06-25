@@ -1,7 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <table class="table products-table">
     <caption style="color: var(--primary)">Products List</caption>
-    <a style="text-decoration: none; color: black"
+    <a style="text-decoration: none; color: var(--primary);"
        href="/LArteDelMangiare_war_exploded/products/create">Crea
         Prodotto</a>
     <thead>
@@ -25,7 +25,7 @@
             <c:forEach items="${products}" var="product">
                 <tr>
                     <td data-head="id">
-                        <a href="#">${product.id}</a>
+                        <a href="/LArteDelMangiare_war_exploded/products/show?=${product.id}">${product.id}</a>
                     </td>
                     <td data-head="Name">${product.prodName}</td>
                     <td data-head="Quantity">${product.quantity}</td>

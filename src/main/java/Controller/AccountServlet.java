@@ -110,10 +110,12 @@ public class AccountServlet extends Controller implements ErrorHandler {
                 HttpServletResponse.SC_BAD_REQUEST);
           }
       }
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
+    } catch (SQLException ex) {
+      log(ex.getMessage());
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
     } catch (InvalidRequestException e) {
-      e.printStackTrace();
+      log(e.getMessage());
+      e.handle(request, response);
     }
   }
 }
