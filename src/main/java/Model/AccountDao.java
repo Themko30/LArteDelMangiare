@@ -9,6 +9,8 @@ public interface AccountDao<E extends Exception> {
 
   Optional<Account> fetchAccount(int id) throws E;
 
+  Optional<Account> findAccount(String email, String password, boolean admin) throws E;
+
   boolean createAccount(Account account) throws E;
 
   boolean updateAccount(Account account) throws E;

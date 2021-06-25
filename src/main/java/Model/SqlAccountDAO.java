@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 public class SqlAccountDAO extends SqlDao implements AccountDao<SQLException> {
 
-  protected SqlAccountDAO(DataSource source) {
+  public SqlAccountDAO(DataSource source) {
     super(source);
   }
 
@@ -41,6 +41,34 @@ public class SqlAccountDAO extends SqlDao implements AccountDao<SQLException> {
       String query = queryBuilder.select().where("acc.id=?").generateQuery();
       try (PreparedStatement ps = conn.prepareStatement(query)) {
         ps.setInt(1, id);
+        ResultSet set = ps.executeQuery();
+        Account account = null;
+        if (set.next()) {
+          account = new AccountExtractor().extract(set);
+        }
+        return Optional.ofNullable(account);
+      }
+    }
+  }
+
+  @Override
+  public Optional<Account> findAccount(String email, String password, boolean admin)
+      throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      QueryBuilder queryBuilder = new QueryBuilder("account", "acc");
+      String query =
+          queryBuilder
+              .select()
+              .where("acc.email=?")
+              .and()
+              .where("acc.password=?")
+              .and()
+              .where("acc.admin=true")
+              .generateQuery();
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setString(1, email);
+        ps.setString(2, password);
+        ps.setBoolean(3, admin);
         ResultSet set = ps.executeQuery();
         Account account = null;
         if (set.next()) {

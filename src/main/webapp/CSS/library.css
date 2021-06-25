@@ -85,9 +85,15 @@ input:focus, textarea:focus, select:focus {
   flex-flow: row wrap;
 }
 
+.grid-x > a {
+  text-decoration: none;
+  color: var(--black);
+  padding: 1rem;
+}
+
 .grid-y {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
 }
 
 .grid-inline {
@@ -188,6 +194,30 @@ button.secondary:hover {
 .paginator > li > a {
   text-decoration: none;
 }
+
+.notification {
+  position: relative;
+  color: var(--secondary);
+  border-radius: 10px;
+  padding: .2rem;
+  margin-bottom: .2rem;
+}
+
+.notification.success {
+  background-color: var(--success);
+}
+
+.notification.danger {
+  background-color: var(--error);
+}
+
+.notification .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  fill: var(--secondary);
+}
+
 
 @media screen and (min-width: 769px) {
   .w50 {

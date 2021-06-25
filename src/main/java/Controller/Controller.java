@@ -1,10 +1,13 @@
 package Controller;
 
+import Model.AccountSession;
+import Model.Cart;
 import java.io.File;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 public abstract class Controller extends HttpServlet {
@@ -35,5 +38,17 @@ public abstract class Controller extends HttpServlet {
 
   protected String getUploadPath() {
     return System.getenv("CATALINA_HOME") + File.separator + "uploads" + File.separator;
+  }
+
+  protected int parsePage(HttpServletRequest request) {
+    return Integer.parseInt(request.getParameter("page"));
+  }
+
+  protected AccountSession getAccountSession(HttpSession session) {
+    return (AccountSession) session.getAttribute("accountSession");
+  }
+
+  protected Cart getSessionCart(HttpSession session) {
+    return (Cart) session.getAttribute("accountCart");
   }
 }

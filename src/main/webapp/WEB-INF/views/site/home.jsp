@@ -11,17 +11,30 @@
 <main class="app grid-y">
     <%@include file="../partials/site/header.jsp" %>
     <section class="body grid-x">
-        <img src="/LArteDelMangiare_war_exploded/IMAGES/logo.png" width="100" height="100">
-        <h1>Categories</h1>
+        <img src="/LArteDelMangiare_war_exploded/IMAGES/logo.png" width="150" height="150">
+        <h1>Categories:</h1>
         <div class="grid-x">
-            <img src="/LArteDelMangiare_war_exploded/IMAGES/Hosomaki.png" width="100" height="100"
+            <img src="/LArteDelMangiare_war_exploded/IMAGES/Hosomaki.png" width="70" height="70"
                  alt="Hosomaki">
-            <img src="" alt="Uramaki">
-            <img src="" alt="Gunkan">
-            <img src="" alt="Temaki">
-            <img src="" alt="Onigiri">
-            <img src="" alt="Nigiri">
-            <img src="" alt="Sashimi">
+            <a href="#">Hosomaki</a>
+            <img src="/LArteDelMangiare_war_exploded/IMAGES/uramaki.png" width="70" height="70"
+                 alt="Uramaki">
+            <p>Uramaki</p>
+            <img src="/LArteDelMangiare_war_exploded/IMAGES/gunkan.png" width="70" height="70"
+                 alt="Gunkan">
+            <p>Gunkan</p>
+            <img src="/LArteDelMangiare_war_exploded/IMAGES/temaki.png" width="70" height="70"
+                 alt="Temaki">
+            <p>Temaki</p>
+            <img src="/LArteDelMangiare_war_exploded/IMAGES/onigiri.png" width="70" height="70"
+                 alt="Onigiri">
+            <p>Onigiri</p>
+            <img src="/LArteDelMangiare_war_exploded/IMAGES/sashimi.png" width="70" height="70"
+                 alt="Sashimi">
+            <p>Sashimi</p>
+            <img src="/LArteDelMangiare_war_exploded/IMAGES/nigiri.png" width="70" height="70"
+                 alt="Nigiri">
+            <p>Nigiri</p>
         </div>
     </section>
     <%@include file="../partials/site/footer.jsp" %>

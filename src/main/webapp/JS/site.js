@@ -4,13 +4,13 @@ dropdown.addEventListener('click', function () {
   content.classList.toggle('full-width');
 })*/
 
-const homeImg = document.getElementsByClassName('body')[0].firstElementChild;
+/*const homeImg = document.getElementsByClassName('body')[0].firstElementChild;
 homeImg.addEventListener("click", function () {
   window.location.href = '/LArteDelMangiare_war_exploded/pages/';
-})
+})*/
 
 const homeText = document.getElementsByClassName(
-    "navbar")[0].getElementsByTagName("h3")[0]
+    "navbar")[0].getElementsByTagName("h1")[0]
 homeText.addEventListener("click", function () {
   window.location.href = '/LArteDelMangiare_war_exploded/pages/';
 })

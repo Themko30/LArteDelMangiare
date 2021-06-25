@@ -1,9 +1,9 @@
 package Model;
 
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.List;
 
 public class Account {
@@ -47,10 +47,17 @@ public class Account {
 
   public void setPassword(String password) {
     try {
-      MessageDigest digest = MessageDigest.getInstance("SHA-1");
-      digest.reset();
-      digest.update(password.getBytes(StandardCharsets.UTF_8));
-      this.password = String.format("%040x", new BigInteger(1, digest.digest()));
+      MessageDigest digest = MessageDigest.getInstance("SHA-512");
+      SecureRandom ss = new SecureRandom();
+      byte[] salt = new byte[16];
+      ss.nextBytes(salt);
+      digest.update(salt);
+      byte[] hashedPwd = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+      StringBuilder builder = new StringBuilder();
+      for (byte bit : hashedPwd) {
+        builder.append(String.format("%02x", bit));
+      }
+      this.password = builder.toString();
     } catch (NoSuchAlgorithmException e) {
       throw new RuntimeException(e);
     }

@@ -16,13 +16,13 @@ public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
   }
 
   @Override
-  public List<Product> fetchProducts(int start, int end) throws SQLException {
+  public List<Product> fetchProducts(Paginator paginator) throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("products", "pro");
       String query = queryBuilder.select().limit(true).generateQuery();
       try (PreparedStatement ps = conn.prepareStatement(query)) {
-        ps.setInt(1, start);
-        ps.setInt(2, end);
+        ps.setInt(1, paginator.getOffset());
+        ps.setInt(2, paginator.getLimit());
         ResultSet set = ps.executeQuery();
         ProductExtractor productExtractor = new ProductExtractor();
         List<Product> products = new ArrayList<>();
@@ -30,6 +30,21 @@ public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
           products.add(productExtractor.extract(set));
         }
         return products;
+      }
+    }
+  }
+
+  @Override
+  public int countAll() throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ("SELECT COUNT(*) FROM products AS pro ");
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ResultSet set = ps.executeQuery();
+        int size = 0;
+        if (set.next()) {
+          size = set.getInt("COUNT(*)");
+        }
+        return size;
       }
     }
   }

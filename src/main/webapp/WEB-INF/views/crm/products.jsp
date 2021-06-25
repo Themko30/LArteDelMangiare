@@ -3,9 +3,8 @@
 <!doctype html>
 <html>
 <head>
-    <c:set var="context" value="${pageContext.request.contextPath}"/>
     <jsp:include page="../partials/head.jsp">
-        <jsp:param name="title" value="LADM-Products Management"/>
+        <jsp:param name="title" value="Products Management"/>
         <jsp:param name="styles" value="crm,products"/>
         <jsp:param name="scripts" value="crm"/>
     </jsp:include>
@@ -15,9 +14,12 @@
     <%@include file="../partials/crm/sidebar.jsp" %>
     <section class="content grid-y">
         <%@include file="../partials/crm/header.jsp" %>
-        <div class="body grid-x justify-center">
-            <section class="grid-y cell products">
+        <div class="body cell grid-x">
+            <section class="grid-y cell">
                 <%@ include file="../product/table.jsp" %>
+                <jsp:include page="../partials/paginator.jsp">
+                    <jsp:param name="resource" value="products"/>
+                </jsp:include>
             </section>
         </div>
         <%@include file="../partials/crm/footer.jsp" %>

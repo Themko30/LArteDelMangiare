@@ -5,9 +5,11 @@ import java.util.Optional;
 
 public interface ProductDao<E extends Exception> {
 
-  List<Product> fetchProducts(int start, int end) throws E;
+  List<Product> fetchProducts(Paginator paginator) throws E;
 
   Optional<Product> fetchProduct(int id) throws E;
+
+  int countAll() throws E;
 
   Optional<Product> fetchProductByLabel(String label) throws E;
 

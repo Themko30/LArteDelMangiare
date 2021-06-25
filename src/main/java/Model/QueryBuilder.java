@@ -40,6 +40,27 @@ public class QueryBuilder {
     return this;
   }
 
+  public QueryBuilder and() {
+    query.append(" AND ");
+    return this;
+  }
+
+  public QueryBuilder countAll(String... fields) {
+    query.append("SELECT COUNT (");
+    if (fields.length == 0) {
+      query.append('*');
+      query.append(")");
+    } else {
+      StringJoiner commaJoiner = new StringJoiner(",");
+      for (String field : fields) {
+        commaJoiner.add(String.format("%s.%s", alias, field));
+      }
+      query.append(commaJoiner.toString());
+    }
+    query.append(" FROM ").append(table).append(" AS ").append(alias);
+    return this;
+  }
+
   public QueryBuilder insert(String... fields) {
     query.append(" INSERT INTO ").append(table).append(' ');
     StringJoiner commaJoiner = new StringJoiner(",", "(", ")");
