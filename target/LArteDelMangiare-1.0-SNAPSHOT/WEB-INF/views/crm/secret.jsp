@@ -27,7 +27,7 @@
     </style>
 </head>
 <body>
-<form class="app grid-x justify-center align-center" action="${context}/crm/secret"
+<form class="app grid-x justify-center align-center" action="${context}/accounts/secret"
       method="post">
     <fieldset class="grid-y cell w50 login">
         <h2>Login Admin Panel</h2>

@@ -60,15 +60,12 @@ public class SqlAccountDAO extends SqlDao implements AccountDao<SQLException> {
           queryBuilder
               .select()
               .where("acc.email=?")
-              .and()
-              .where("acc.password=?")
-              .and()
-              .where("acc.admin=true")
+              .and("acc.password=?")
+              .and("acc.admin=true")
               .generateQuery();
       try (PreparedStatement ps = conn.prepareStatement(query)) {
         ps.setString(1, email);
         ps.setString(2, password);
-        ps.setBoolean(3, admin);
         ResultSet set = ps.executeQuery();
         Account account = null;
         if (set.next()) {

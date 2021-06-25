@@ -5,6 +5,6 @@
     </label>
     <span class="account">
         <%@include file="../../../../ICONS/user.svg" %>
-        Welcome Admin
+        Welcome ${accountSession.username}
     </span>
 </header>

@@ -40,8 +40,8 @@ public class QueryBuilder {
     return this;
   }
 
-  public QueryBuilder and() {
-    query.append(" AND ");
+  public QueryBuilder and(String condition) {
+    query.append(" AND ").append(condition);
     return this;
   }
 

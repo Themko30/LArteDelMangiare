@@ -2,7 +2,7 @@ package Model;
 
 public class AccountSession {
 
-  private final String firstName, lastName;
+  private final String firstName, lastName, username;
   private final int id;
   private final boolean isAdmin;
 
@@ -11,6 +11,7 @@ public class AccountSession {
     this.lastName = account.getLastName();
     this.id = account.getId();
     this.isAdmin = account.getAdmin();
+    this.username = account.getUsername();
   }
 
   public String getFirstName() {
@@ -27,5 +28,9 @@ public class AccountSession {
 
   public boolean isAdmin() {
     return isAdmin;
+  }
+
+  public String getUsername() {
+    return username;
   }
 }

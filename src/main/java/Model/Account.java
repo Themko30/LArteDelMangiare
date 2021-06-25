@@ -49,9 +49,6 @@ public class Account {
     try {
       MessageDigest digest = MessageDigest.getInstance("SHA-512");
       SecureRandom ss = new SecureRandom();
-      byte[] salt = new byte[16];
-      ss.nextBytes(salt);
-      digest.update(salt);
       byte[] hashedPwd = digest.digest(password.getBytes(StandardCharsets.UTF_8));
       StringBuilder builder = new StringBuilder();
       for (byte bit : hashedPwd) {
