@@ -11,16 +11,18 @@ import javax.sql.DataSource;
 
 public class SqlCountryDAO extends SqlDao implements CountryDao<SQLException> {
 
-  protected SqlCountryDAO(DataSource source) {
+  public SqlCountryDAO(DataSource source) {
     super(source);
   }
 
   @Override
-  public List<Country> fetchCountries() throws SQLException {
+  public List<Country> fetchCountries(Paginator paginator) throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("country", "cou");
-      queryBuilder.select();
-      try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
+      String query = queryBuilder.select().limit(true).generateQuery();
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setInt(1, paginator.getOffset());
+        ps.setInt(2, paginator.getLimit());
         ResultSet set = ps.executeQuery();
         CountryExtractor countryExtractor = new CountryExtractor();
         List<Country> country = new ArrayList<>();
@@ -45,6 +47,21 @@ public class SqlCountryDAO extends SqlDao implements CountryDao<SQLException> {
           country = new CountryExtractor().extract(set);
         }
         return Optional.ofNullable(country);
+      }
+    }
+  }
+
+  @Override
+  public int countAll() throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ("SELECT COUNT(*) FROM country AS cou ");
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ResultSet set = ps.executeQuery();
+        int size = 0;
+        if (set.next()) {
+          size = set.getInt("COUNT(*)");
+        }
+        return size;
       }
     }
   }

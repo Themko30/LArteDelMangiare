@@ -11,16 +11,18 @@ import javax.sql.DataSource;
 
 public class SqlCategoryDAO extends SqlDao implements CategoryDao<SQLException> {
 
-  protected SqlCategoryDAO(DataSource source) {
+  public SqlCategoryDAO(DataSource source) {
     super(source);
   }
 
   @Override
-  public List<Category> fetchCategories() throws SQLException {
+  public List<Category> fetchCategories(Paginator paginator) throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("category", "cat");
-      queryBuilder.select();
-      try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
+      String query = queryBuilder.select().limit(true).generateQuery();
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setInt(1, paginator.getOffset());
+        ps.setInt(2, paginator.getLimit());
         ResultSet set = ps.executeQuery();
         CategoryExtractor categoryExtractor = new CategoryExtractor();
         List<Category> categories = new ArrayList<>();
@@ -45,6 +47,21 @@ public class SqlCategoryDAO extends SqlDao implements CategoryDao<SQLException> 
           category = new CategoryExtractor().extract(set);
         }
         return Optional.ofNullable(category);
+      }
+    }
+  }
+
+  @Override
+  public int countAll() throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ("SELECT COUNT(*) FROM category AS cat ");
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ResultSet set = ps.executeQuery();
+        int size = 0;
+        if (set.next()) {
+          size = set.getInt("COUNT(*)");
+        }
+        return size;
       }
     }
   }

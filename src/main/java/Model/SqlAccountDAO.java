@@ -16,13 +16,13 @@ public class SqlAccountDAO extends SqlDao implements AccountDao<SQLException> {
   }
 
   @Override
-  public List<Account> fetchAccounts(int start, int end) throws SQLException {
+  public List<Account> fetchAccounts(Paginator paginator) throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("account", "acc");
       String query = queryBuilder.select().limit(true).generateQuery();
       try (PreparedStatement ps = conn.prepareStatement(query)) {
-        ps.setInt(1, start);
-        ps.setInt(2, end);
+        ps.setInt(1, paginator.getOffset());
+        ps.setInt(2, paginator.getLimit());
         ResultSet set = ps.executeQuery();
         AccountExtractor accountExtractor = new AccountExtractor();
         List<Account> accounts = new ArrayList<>();
@@ -72,6 +72,21 @@ public class SqlAccountDAO extends SqlDao implements AccountDao<SQLException> {
           account = new AccountExtractor().extract(set);
         }
         return Optional.ofNullable(account);
+      }
+    }
+  }
+
+  @Override
+  public int countAll() throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ("SELECT COUNT(*) FROM account AS acc ");
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ResultSet set = ps.executeQuery();
+        int size = 0;
+        if (set.next()) {
+          size = set.getInt("COUNT(*)");
+        }
+        return size;
       }
     }
   }

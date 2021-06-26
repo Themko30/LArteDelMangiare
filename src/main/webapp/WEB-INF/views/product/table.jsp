@@ -2,8 +2,8 @@
 <table class="table products-table">
     <caption style="color: var(--primary)">Products List</caption>
     <a style="text-decoration: none; color: var(--primary);"
-       href="/LArteDelMangiare_war_exploded/products/create">Crea
-        Prodotto</a>
+       href="/LArteDelMangiare_war_exploded/products/create">Create
+        Account</a>
     <thead>
     <tr>
         <th>Id</th>

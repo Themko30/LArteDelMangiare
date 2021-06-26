@@ -14,7 +14,7 @@
         <a href="#" class="">Home</a>
         <a href="#">Products</a>
         <div class="dropdown">
-            <button class="dropbtn">Categories
+            <button class="dropbtn" style="color: white">Categories
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">

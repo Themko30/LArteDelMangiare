@@ -14,7 +14,10 @@
 
 .body {
   flex-grow: 1;
-  background: linear-gradient(var(--primary), var(--secondary));
+  background-image: url("../IMAGES/wallpaper.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
   width: 100%;
 }
 
@@ -28,12 +31,42 @@
   padding: 1rem
 }
 
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-image: linear-gradient(var(--primary), var(--secondary));
+  background-clip: border-box;
+  border-radius: 0.5rem;
+  opacity: 0.9;
+  margin: 0.5rem;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: 1rem 1rem;
+}
+
+.card-title {
+  margin-bottom: 0.5rem;
+}
+
+.card-title a {
+  text-decoration: none;
+  color: var(--black);
+}
+
 .title {
   text-align: center;
 }
 
 .navbar {
-  background-color: var(--primary);
+  background-image: url("../IMAGES/wallheader.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   padding: .5rem;
   width: 100%;
 }
@@ -56,17 +89,18 @@
 }
 
 .navbar > * {
-  color: var(--black);
+  color: white;
   margin-right: 8px;
 }
 
-.navbar > svg {
+.navbar svg {
   cursor: pointer;
+  fill: white;
 }
 
 .menu > a {
   text-decoration: none;
-  color: var(--black);
+  color: white;
   padding: 1rem
 }
 
@@ -121,18 +155,25 @@
   font-style: normal;
   font-weight: normal;
   padding-right: 1rem;
-  background-color: var(--secondary);
   width: 100%;
+  background-image: url("../IMAGES/wallheader.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 .info > a {
   text-decoration: none;
-  color: var(--black);
+  color: white;
   padding: .3rem;
 }
 
 .info a:hover {
   background-color: var(--primary);
+}
+
+.info > p {
+  color: white;
 }
 
 @media screen and (min-width: 769px) {

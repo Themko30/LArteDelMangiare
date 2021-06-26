@@ -133,6 +133,13 @@ input:focus, textarea:focus, select:focus {
   padding: 8px;
   border: none;
   cursor: pointer;
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.btn:hover {
+  color: var(--success);
+  filter: brightness(120%);
 }
 
 button.primary {

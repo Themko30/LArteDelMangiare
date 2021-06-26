@@ -3,6 +3,7 @@ package Controller;
 import Model.Account;
 import Model.AccountDao;
 import Model.AccountSession;
+import Model.Paginator;
 import Model.SqlAccountDAO;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -32,37 +33,37 @@ public class AccountServlet extends Controller implements ErrorHandler {
       String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
       switch (path) {
         case "/":
-          request
-              .getRequestDispatcher("/WEB-INF/views/crm/accounts.jsp")
-              .forward(request, response);
+          /*authorize(request.getSession(false));*/
+          int intPage = parsePage(request);
+          Paginator paginator = new Paginator(intPage, 30);
+          int size = 0;
+          size = accountDao.countAll();
+          request.setAttribute("pages", paginator.getPages(size));
+          List<Account> accounts = null;
+          accounts = accountDao.fetchAccounts(paginator);
+          request.setAttribute("accounts", accounts);
+          request.getRequestDispatcher(view("crm/accounts")).forward(request, response);
           break;
-
         case "/create":
           request.getRequestDispatcher("/WEB-INF/views/crm/account.jsp").forward(request, response);
           break;
-
         case "/show":
           request
               .getRequestDispatcher("/WEB-INF/views/crm/accounts.jsp")
               .forward(request, response);
           break;
-
         case "/secret":
           request.getRequestDispatcher("/WEB-INF/views/crm/secret.jsp").forward(request, response);
           break;
-
         case "/signin":
           request.getRequestDispatcher("/WEB-INF/views/crm/signin.jsp").forward(request, response);
           break;
-
         case "/signup":
           request.getRequestDispatcher("/WEB-INF/views/crm/signup.jsp").forward(request, response);
           break;
-
         case "/profile":
           request.getRequestDispatcher("/WEB-INF/views/crm/profile.jsp").forward(request, response);
           break;
-
         case "/logout":
           HttpSession session = request.getSession(false);
           authenticate(session);
@@ -75,10 +76,12 @@ public class AccountServlet extends Controller implements ErrorHandler {
           session.invalidate();
           response.sendRedirect(redirect);
           break;
-
         default:
           notFound();
       }
+    } catch (SQLException ex) {
+      log(ex.getMessage());
+      response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
     } catch (InvalidRequestException e) {
       log(e.getMessage());
       e.handle(request, response);

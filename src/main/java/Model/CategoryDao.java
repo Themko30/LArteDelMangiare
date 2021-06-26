@@ -5,9 +5,11 @@ import java.util.Optional;
 
 public interface CategoryDao<E extends Exception> {
 
-  List<Category> fetchCategories() throws E;
+  List<Category> fetchCategories(Paginator paginator) throws E;
 
   Optional<Category> fetchCategory(int id) throws E;
+
+  int countAll() throws E;
 
   boolean createCategories(Category category) throws E;
 
