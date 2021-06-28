@@ -33,7 +33,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
       String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
       switch (path) {
         case "/":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           int intPage = parsePage(request);
           Paginator paginator = new Paginator(intPage, 30);
           int size = 0;

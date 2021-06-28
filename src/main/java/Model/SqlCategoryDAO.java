@@ -70,9 +70,12 @@ public class SqlCategoryDAO extends SqlDao implements CategoryDao<SQLException> 
   public boolean createCategories(Category category) throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("category", "cat");
-      queryBuilder.insert("label");
+      queryBuilder.insert("id", "label", "description", "image");
       try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
-        ps.setString(1, category.getLabel());
+        ps.setInt(1, category.getId());
+        ps.setString(2, category.getLabel());
+        ps.setString(3, category.getDescription());
+        ps.setString(4, category.getImage());
         int row = ps.executeUpdate();
         return row == 1;
       }

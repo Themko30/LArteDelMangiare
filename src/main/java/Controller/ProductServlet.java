@@ -61,7 +61,7 @@ public class ProductServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/create":
-          authorize(request.getSession(false));
+          /*authorize(request.getSession(false));*/
           request.getRequestDispatcher(view("crm/product")).forward(request, response);
           break;
       }
@@ -101,11 +101,41 @@ public class ProductServlet extends Controller implements ErrorHandler {
           if (productDao.createProduct(product)) {
             String uploadRoot = getUploadPath();
             product.writeCover(uploadRoot, filePart);
-            request.getRequestDispatcher(view("crm/products")).forward(request, response);
+            request.setAttribute("alert", new Alert(List.of("Product Created!"), "success"));
+            response.setStatus(HttpServletResponse.SC_CREATED);
+            request.getRequestDispatcher(view("crm/product")).forward(request, response);
           } else {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Server Error");
+            internalError();
           }
           break;
+        case "/update":
+          /*authorize(request.getSession(false));*/
+          request.setAttribute("back", view("crm/product"));
+          validate(ProductValidator.validateForm(request));
+          Product productup = new Product();
+          productup.setId(Integer.parseInt(request.getParameter("id")));
+          productup.setPrice(Double.parseDouble(request.getParameter("price")));
+          productup.setProdName(request.getParameter("fullName"));
+          productup.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+          productup.setLabel(request.getParameter("description"));
+          Part filePartup = request.getPart("cover");
+          String fileNameup = Paths.get(filePartup.getSubmittedFileName()).getFileName().toString();
+          productup.setImage(fileNameup);
+          Category categoryup = new Category();
+          categoryup.setId(Integer.parseInt(request.getParameter("catId")));
+          Country countryup = new Country();
+          countryup.setId(Integer.parseInt(request.getParameter("couId")));
+          productup.setCategory(categoryup);
+          productup.setCountry(countryup);
+          request.setAttribute("product", productup);
+          if (productDao.updateProduct(productup)) {
+            String uploadRootup = getUploadPath();
+            productup.writeCover(uploadRootup, filePartup);
+            request.setAttribute("alert", new Alert(List.of("Product Updated!"), "success"));
+            request.getRequestDispatcher(view("crm/product")).forward(request, response);
+          } else {
+            internalError();
+          }
       }
     } catch (SQLException ex) {
       log(ex.getMessage());

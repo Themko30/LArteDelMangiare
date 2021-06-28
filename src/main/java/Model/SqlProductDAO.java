@@ -87,7 +87,7 @@ public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
   public boolean createProduct(Product product) throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("products", "pro");
-      queryBuilder.insert("id", "prodname", "quantity", "price", "label", "image");
+      queryBuilder.insert(" id", "prodname", "quantity", "price", "label", "image");
       try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
         ps.setInt(1, product.getId());
         ps.setString(2, product.getProdName());
@@ -105,13 +105,14 @@ public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
   public boolean updateProduct(Product product) throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("products", "pro");
-      queryBuilder.update("prodname", "quantity", "price", "label", "image").where("id=?");
+      queryBuilder.update("prodname", " quantity", " price", " label", " image").where(" id=?");
       try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
         ps.setString(1, product.getProdName());
         ps.setInt(2, product.getQuantity());
         ps.setDouble(3, product.getPrice());
         ps.setString(4, product.getLabel());
         ps.setString(5, product.getImage());
+        ps.setInt(6, product.getId());
         int rows = ps.executeUpdate();
         return rows == 1;
       }
@@ -122,7 +123,7 @@ public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
   public boolean deleteProduct(int id) throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("products", "pro");
-      queryBuilder.delete().where("id=?");
+      queryBuilder.delete().where(" id=?");
       try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
         ps.setInt(1, id);
         int rows = ps.executeUpdate();

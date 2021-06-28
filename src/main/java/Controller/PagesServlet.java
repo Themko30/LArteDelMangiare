@@ -30,8 +30,7 @@ public class PagesServlet extends Controller implements ErrorHandler {
       String path = getPath(request);
       switch (path) {
         case "/":
-          int intPage = parsePage(request);
-          Paginator paginator = new Paginator(intPage, 30);
+          Paginator paginator = new Paginator(1, 30);
           int size = 0;
           size = categoryDao.countAll();
           request.setAttribute("pages", paginator.getPages(size));

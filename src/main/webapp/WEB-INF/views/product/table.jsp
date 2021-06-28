@@ -3,7 +3,7 @@
     <caption style="color: var(--primary)">Products List</caption>
     <a style="text-decoration: none; color: var(--primary);"
        href="/LArteDelMangiare_war_exploded/products/create">Create
-        Account</a>
+        Product</a>
     <thead>
     <tr>
         <th>Id</th>
@@ -25,7 +25,7 @@
             <c:forEach items="${products}" var="product">
                 <tr>
                     <td data-head="id">
-                        <a href="/LArteDelMangiare_war_exploded/products/show?=${product.id}">${product.id}</a>
+                        <a href="/LArteDelMangiare_war_exploded/products/show?id=${product.id}">${product.id}</a>
                     </td>
                     <td data-head="Name">${product.prodName}</td>
                     <td data-head="Quantity">${product.quantity}</td>

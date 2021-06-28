@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.List;
 import java.util.StringJoiner;
 
 public class QueryBuilder {
@@ -85,7 +86,7 @@ public class QueryBuilder {
   }
 
   public QueryBuilder update(String... fields) {
-    query.append("UPDATE ").append(table);
+    query.append("UPDATE ").append(table).append(" SET ");
     StringJoiner commaJoiner = new StringJoiner(",");
     for (String field : fields) {
       commaJoiner.add(String.format("%s = %s", field, QM));
@@ -115,6 +116,20 @@ public class QueryBuilder {
 
   public QueryBuilder on(String condition) {
     query.append(" ON ").append(condition);
+    return this;
+  }
+
+  public QueryBuilder search(List<Condition> conditions) {
+    StringJoiner searchJoiner = new StringJoiner(" AND ");
+    for (Condition cn : conditions) {
+      if (cn.getOperator() == Operator.MATCH) {
+        String tmp = alias + '.' + cn.toString() + '%' + QM + '%';
+        searchJoiner.add(tmp);
+      } else {
+        searchJoiner.add(String.format("%s.%s%s", alias, cn.toString(), QM));
+      }
+    }
+    query.append(searchJoiner);
     return this;
   }
 }

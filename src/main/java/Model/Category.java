@@ -1,6 +1,11 @@
 package Model;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.List;
+import javax.servlet.http.Part;
 
 public class Category {
 
@@ -50,5 +55,12 @@ public class Category {
 
   public void setProducts(List<Product> products) {
     this.products = products;
+  }
+
+  public void writeCover(String uploadPath, Part stream) throws IOException {
+    try (InputStream fileStream = stream.getInputStream()) {
+      File file = new File(uploadPath + image);
+      Files.copy(fileStream, file.toPath());
+    }
   }
 }

@@ -11,7 +11,7 @@ public class RequestValidator {
   private final List<String> errors;
   private final HttpServletRequest request;
   private static final Pattern INT_PATTERN = Pattern.compile("^\\d+$");
-  private static final Pattern DOUBLE_PATTERN = Pattern.compile("^(-)?(0|[1-9]\\d+)\\.\\d+$");
+  private static final Pattern DOUBLE_PATTERN = Pattern.compile("^\\d{0,5}(\\.\\d{0,2}){0,1}$");
 
   public RequestValidator(HttpServletRequest request) {
     this.errors = new ArrayList<>();
