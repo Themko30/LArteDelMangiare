@@ -11,6 +11,8 @@ public interface ProductDao<E extends Exception> {
 
   int countAll() throws E;
 
+  int sum() throws E;
+
   Optional<Product> fetchProductByLabel(String label) throws E;
 
   boolean createProduct(Product product) throws E;

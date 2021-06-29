@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Purchase {
 
-  private int id;
+  private int id, accountNum;
   private double total;
   private Long panCard;
   private String cardCircuit;
@@ -70,6 +70,14 @@ public class Purchase {
 
   public void setCreated(LocalDate created) {
     this.created = created;
+  }
+
+  public int getAccountNum() {
+    return accountNum;
+  }
+
+  public void setAccountNum(int accountNum) {
+    this.accountNum = accountNum;
   }
 
   public int entries() {

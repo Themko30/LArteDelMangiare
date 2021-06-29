@@ -13,6 +13,7 @@ public class PurchaseExtractor implements ResultSetExtractor<Purchase> {
     purchase.setPanCard(resultSet.getLong("pur.pan_card"));
     purchase.setCreated(resultSet.getDate("pur.date").toLocalDate());
     purchase.setTotal(resultSet.getDouble("pur.total"));
+    purchase.setAccountNum(resultSet.getInt("pur.account_fk"));
     return purchase;
   }
 }

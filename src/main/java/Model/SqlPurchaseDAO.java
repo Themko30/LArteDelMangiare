@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> {
 
-  protected SqlPurchaseDAO(DataSource source) {
+  public SqlPurchaseDAO(DataSource source) {
     super(source);
   }
 
@@ -78,6 +78,36 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
         ResultSet set = ps.executeQuery();
         Purchase purchase = set.next() ? new PurchaseExtractor().extract(set) : null;
         return Optional.ofNullable(purchase);
+      }
+    }
+  }
+
+  @Override
+  public int countAll() throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ("SELECT COUNT(*) FROM purchase AS pur ");
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ResultSet set = ps.executeQuery();
+        int size = 0;
+        if (set.next()) {
+          size = set.getInt("COUNT(*)");
+        }
+        return size;
+      }
+    }
+  }
+
+  @Override
+  public int sum() throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ("SELECT SUM(total) total FROM purchase as pur");
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ResultSet set = ps.executeQuery();
+        int size = 0;
+        if (set.next()) {
+          size = set.getInt("total");
+        }
+        return size;
       }
     }
   }

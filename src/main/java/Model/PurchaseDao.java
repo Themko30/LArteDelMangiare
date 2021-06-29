@@ -11,5 +11,9 @@ public interface PurchaseDao<E extends Exception> {
 
   Optional<Purchase> fetchPurchase(int id) throws E;
 
+  int countAll() throws E;
+
+  int sum() throws E;
+
   boolean createPurchase(Purchase purchase) throws E;
 }

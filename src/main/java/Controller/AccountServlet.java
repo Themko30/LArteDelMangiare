@@ -33,7 +33,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
       String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
       switch (path) {
         case "/":
-          authorize(request.getSession(false));
+          /*authorize(request.getSession(false));*/
           int intPage = parsePage(request);
           Paginator paginator = new Paginator(intPage, 30);
           int size = 0;
@@ -48,9 +48,16 @@ public class AccountServlet extends Controller implements ErrorHandler {
           request.getRequestDispatcher("/WEB-INF/views/crm/account.jsp").forward(request, response);
           break;
         case "/show":
-          request
-              .getRequestDispatcher("/WEB-INF/views/crm/accounts.jsp")
-              .forward(request, response);
+          /*authorize(request.getSession(false));*/
+          validate(CommonValidator.validateId(request));
+          int id = Integer.parseInt(request.getParameter("id"));
+          Optional<Account> optionalAccount = accountDao.fetchAccount(id);
+          if (optionalAccount.isPresent()) {
+            request.setAttribute("account", optionalAccount.get());
+            request.getRequestDispatcher(view("crm/account")).forward(request, response);
+          } else {
+            notFound();
+          }
           break;
         case "/secret":
           request.getRequestDispatcher("/WEB-INF/views/crm/secret.jsp").forward(request, response);
@@ -107,11 +114,49 @@ public class AccountServlet extends Controller implements ErrorHandler {
             request.getSession(true).setAttribute("accountSession", accountSession);
             response.sendRedirect("/LArteDelMangiare_war_exploded/pages/dashboard");
           } else {
-            throw new InvalidRequestException(
-                "Not Valid Credentials",
-                List.of("Not Valid Credentials"),
-                HttpServletResponse.SC_BAD_REQUEST);
+            notAllowed();
           }
+          break;
+        case "/create":
+          /*authorize(request.getSession(false));*/
+          request.setAttribute("back", view("crm/account"));
+          validate(AccountValidator.validateForm(request));
+          Account account = new Account();
+          account.setUsername(request.getParameter("userName"));
+          account.setFirstName(request.getParameter("firstName"));
+          account.setLastName(request.getParameter("lastName"));
+          account.setAddress(request.getParameter("address"));
+          account.setEmail(request.getParameter("email"));
+          account.setPassword(request.getParameter("password"));
+          account.setAdmin(Boolean.parseBoolean(request.getParameter("admin")));
+          if (accountDao.createAccount(account)) {
+            request.setAttribute("alert", new Alert(List.of("Account Created!"), "success"));
+            response.setStatus(HttpServletResponse.SC_CREATED);
+            request.getRequestDispatcher(view("crm/account")).forward(request, response);
+          } else {
+            internalError();
+          }
+          break;
+        case "/update":
+          /*authorize(request.getSession(false));*/
+          request.setAttribute("back", view("crm/account"));
+          validate(AccountValidator.validateForm(request));
+          Account accountup = new Account();
+          accountup.setId(Integer.parseInt(request.getParameter("id")));
+          accountup.setUsername(request.getParameter("userName"));
+          accountup.setFirstName(request.getParameter("firstName"));
+          accountup.setLastName(request.getParameter("lastName"));
+          accountup.setAddress(request.getParameter("address"));
+          accountup.setEmail(request.getParameter("email"));
+          accountup.setAdmin(Boolean.parseBoolean(request.getParameter("admin")));
+          request.setAttribute("account", accountup);
+          if (accountDao.updateAccount(accountup)) {
+            request.setAttribute("alert", new Alert(List.of("Account Updated!"), "success"));
+            request.getRequestDispatcher(view("crm/account")).forward(request, response);
+          } else {
+            internalError();
+          }
+          break;
       }
     } catch (SQLException ex) {
       log(ex.getMessage());

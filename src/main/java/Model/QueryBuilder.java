@@ -132,4 +132,9 @@ public class QueryBuilder {
     query.append(searchJoiner);
     return this;
   }
+
+  public QueryBuilder sum(String columnName) {
+    query.append("SELECT SUM(%s) FROM ").append(table);
+    return this;
+  }
 }

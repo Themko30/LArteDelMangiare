@@ -1,0 +1,8 @@
+.products {
+  margin: 1rem;
+}
+
+.products-table > thead {
+  background-color: var(--primary);
+  color: var(--black);
+}

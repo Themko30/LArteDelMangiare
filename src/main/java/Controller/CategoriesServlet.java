@@ -99,36 +99,27 @@ public class CategoriesServlet extends Controller implements ErrorHandler {
             internalError();
           }
           break;
-          /*case "/update":
-           */
+        case "/update":
           /*authorize(request.getSession(false));*/
-          /*
           request.setAttribute("back", view("crm/product"));
           validate(ProductValidator.validateForm(request));
-          Product productup = new Product();
-          productup.setId(Integer.parseInt(request.getParameter("id")));
-          productup.setPrice(Double.parseDouble(request.getParameter("price")));
-          productup.setProdName(request.getParameter("fullName"));
-          productup.setQuantity(Integer.parseInt(request.getParameter("quantity")));
-          productup.setLabel(request.getParameter("description"));
+          Category categoryup = new Category();
+          categoryup.setId(Integer.parseInt(request.getParameter("id")));
+          categoryup.setLabel(request.getParameter("label"));
+          categoryup.setDescription(request.getParameter("description"));
           Part filePartup = request.getPart("cover");
           String fileNameup = Paths.get(filePartup.getSubmittedFileName()).getFileName().toString();
-          productup.setImage(fileNameup);
-          Category categoryup = new Category();
-          categoryup.setId(Integer.parseInt(request.getParameter("catId")));
-          Country countryup = new Country();
-          countryup.setId(Integer.parseInt(request.getParameter("couId")));
-          productup.setCategory(categoryup);
-          productup.setCountry(countryup);
-          request.setAttribute("product", productup);
-          if (productDao.updateProduct(productup)) {
+          categoryup.setImage(fileNameup);
+          request.setAttribute("category", categoryup);
+          if (categoryDao.updateCategories(categoryup)) {
             String uploadRootup = getUploadPath();
-            productup.writeCover(uploadRootup, filePartup);
-            request.setAttribute("alert", new Alert(List.of("Product Updated!"), "success"));
-            request.getRequestDispatcher(view("crm/product")).forward(request, response);
+            categoryup.writeCover(uploadRootup, filePartup);
+            request.setAttribute("alert", new Alert(List.of("Category Updated!"), "success"));
+            request.getRequestDispatcher(view("crm/category")).forward(request, response);
           } else {
             internalError();
-          }*/
+          }
+          break;
       }
     } catch (SQLException ex) {
       log(ex.getMessage());

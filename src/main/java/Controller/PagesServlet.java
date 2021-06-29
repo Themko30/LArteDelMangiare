@@ -1,9 +1,13 @@
 package Controller;
 
+import Model.AccountDao;
 import Model.Category;
 import Model.CategoryDao;
 import Model.Paginator;
+import Model.ProductDao;
+import Model.SqlAccountDAO;
 import Model.SqlCategoryDAO;
+import Model.SqlProductDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,11 +20,15 @@ import javax.servlet.http.HttpServletResponse;
 public class PagesServlet extends Controller implements ErrorHandler {
 
   private CategoryDao<SQLException> categoryDao;
+  private AccountDao<SQLException> accountDao;
+  private ProductDao<SQLException> productDao;
 
   @Override
   public void init() throws ServletException {
     super.init();
     categoryDao = new SqlCategoryDAO(source);
+    accountDao = new SqlAccountDAO(source);
+    productDao = new SqlProductDAO(source);
   }
 
   @Override
@@ -41,6 +49,12 @@ public class PagesServlet extends Controller implements ErrorHandler {
           break;
         case "/dashboard":
           /*authorize(request.getSession(false));*/
+          int sizeAccounts = 0;
+          sizeAccounts = accountDao.countAll();
+          request.setAttribute("sizeAccounts", sizeAccounts);
+          int sizeProducts = 0;
+          sizeProducts = productDao.sum();
+          request.setAttribute("sizeProducts", sizeProducts);
           request.getRequestDispatcher(view("crm/home")).forward(request, response);
           break;
         default:
