@@ -30,7 +30,7 @@ final class PurchaseQuery {
 
   static String createPurchase() {
     QueryBuilder builder = new QueryBuilder(PURCHASE_QUERY, PURCHASE_ALIAS);
-    builder.insert("card_circuit", "pan_card", "date", "total");
+    builder.insert("card_circuit", "pan_card", "date", "total", "account_fk");
     return builder.generateQuery();
   }
 

@@ -47,26 +47,28 @@ public class PagesServlet extends Controller implements ErrorHandler {
           request.setAttribute("categories", categories);
           request.getRequestDispatcher(view("site/home")).forward(request, response);
           break;
-        case "/dashboard":
+          /*case "/dashboard":
+           */
           /*authorize(request.getSession(false));*/
-          int sizeAccounts = 0;
-          sizeAccounts = accountDao.countAll();
-          request.setAttribute("sizeAccounts", sizeAccounts);
-          int sizeProducts = 0;
-          sizeProducts = productDao.sum();
-          request.setAttribute("sizeProducts", sizeProducts);
-          request.getRequestDispatcher(view("crm/home")).forward(request, response);
-          break;
-        default:
-          notFound();
+          /*
+            int sizeAccounts = 0;
+            sizeAccounts = accountDao.countAll();
+            request.setAttribute("sizeAccounts", sizeAccounts);
+            int sizeProducts = 0;
+            sizeProducts = productDao.sum();
+            request.setAttribute("sizeProducts", sizeProducts);
+            request.getRequestDispatcher(view("crm/home")).forward(request, response);
+            break;
+          default:
+            notFound();*/
       }
     } catch (SQLException ex) {
       log(ex.getMessage());
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
-    } catch (InvalidRequestException e) {
-      log(e.getMessage());
-      e.handle(request, response);
-    }
+    } /*catch (InvalidRequestException e) {
+        log(e.getMessage());
+        e.handle(request, response);
+      }*/
   }
 
   @Override

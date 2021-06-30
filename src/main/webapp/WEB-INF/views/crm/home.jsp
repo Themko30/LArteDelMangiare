@@ -28,13 +28,13 @@
             </jsp:include>
 
             <jsp:include page="../partials/crm/statscard.jsp">
-                <jsp:param name="title" value="Monthly Earnings"/>
-                <jsp:param name="stat" value="1550 Euro"/>
+                <jsp:param name="title" value="Total Earnings"/>
+                <jsp:param name="stat" value="${earnings} Euro"/>
             </jsp:include>
 
             <jsp:include page="../partials/crm/statscard.jsp">
-                <jsp:param name="title" value="Monthly Orders"/>
-                <jsp:param name="stat" value="86"/>
+                <jsp:param name="title" value="Total Orders"/>
+                <jsp:param name="stat" value="${purchases}"/>
             </jsp:include>
 
         </div>

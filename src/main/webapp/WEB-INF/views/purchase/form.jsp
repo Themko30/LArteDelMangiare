@@ -8,8 +8,7 @@
 </c:if>
 
 <form method="post"
-      action="/LArteDelMangiare_war_exploded/purchases/${isCreate ? 'create' : 'update'}"
-      enctype="multipart/form-data">
+      action="/LArteDelMangiare_war_exploded/purchases/${isCreate ? 'create' : 'update'}">
     <c:if test="${not isCreate}">
         <input type="hidden" name="id" value="${purchase.id}">
     </c:if>

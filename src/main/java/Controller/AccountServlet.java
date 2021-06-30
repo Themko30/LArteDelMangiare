@@ -112,7 +112,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
           if (optionalAccount.isPresent()) {
             AccountSession accountSession = new AccountSession(optionalAccount.get());
             request.getSession(true).setAttribute("accountSession", accountSession);
-            response.sendRedirect("/LArteDelMangiare_war_exploded/pages/dashboard");
+            response.sendRedirect("/LArteDelMangiare_war_exploded/crm/dashboard");
           } else {
             notAllowed();
           }

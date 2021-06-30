@@ -123,6 +123,7 @@ public class SqlAccountDAO extends SqlDao implements AccountDao<SQLException> {
         ps.setString(3, account.getFirstName());
         ps.setString(4, account.getLastName());
         ps.setString(5, account.getEmail());
+        ps.setInt(6, account.getId());
         int rows = ps.executeUpdate();
         return rows == 1;
       }

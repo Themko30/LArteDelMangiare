@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -137,6 +138,40 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
           conn.setAutoCommit(true);
           return false;
         }
+      }
+    }
+  }
+
+  @Override
+  public boolean createPurchaseAdmin(Purchase purchase) throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = PurchaseQuery.createPurchase();
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setString(1, purchase.getCardCircuit());
+        ps.setLong(2, purchase.getPanCard());
+        ps.setDate(3, Date.valueOf(purchase.getCreated()));
+        ps.setDouble(4, purchase.getTotal());
+        ps.setInt(5, purchase.getAccountNum());
+        int row = ps.executeUpdate();
+        return row == 1;
+      }
+    }
+  }
+
+  @Override
+  public boolean updatePurchaseAdmin(Purchase purchase) throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      QueryBuilder queryBuilder = new QueryBuilder("purchase", "pur");
+      queryBuilder.update("card_circuit", "pan_card", "date", "total", "account_fk").where("id=?");
+      try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
+        ps.setString(1, purchase.getCardCircuit());
+        ps.setLong(2, purchase.getPanCard());
+        ps.setDate(3, Date.valueOf(purchase.getCreated()));
+        ps.setDouble(4, purchase.getTotal());
+        ps.setInt(5, purchase.getAccountNum());
+        ps.setInt(6, purchase.getId());
+        int rows = ps.executeUpdate();
+        return rows == 1;
       }
     }
   }

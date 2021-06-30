@@ -16,4 +16,8 @@ public interface PurchaseDao<E extends Exception> {
   int sum() throws E;
 
   boolean createPurchase(Purchase purchase) throws E;
+
+  boolean createPurchaseAdmin(Purchase purchase) throws E;
+
+  boolean updatePurchaseAdmin(Purchase purchase) throws E;
 }
