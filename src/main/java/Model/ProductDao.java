@@ -9,7 +9,13 @@ public interface ProductDao<E extends Exception> {
 
   Optional<Product> fetchProduct(int id) throws E;
 
+  List<Product> fetchProductsByCat(int catId, Paginator paginator) throws E;
+
+  List<Product> fetchProductsWithRelations(Paginator paginator) throws E;
+
   int countAll() throws E;
+
+  int countAllByCat(int catId) throws E;
 
   int sum() throws E;
 
@@ -20,4 +26,6 @@ public interface ProductDao<E extends Exception> {
   boolean updateProduct(Product product) throws E;
 
   boolean deleteProduct(int id) throws E;
+
+  List<Product> search(List<Condition> conditions) throws E;
 }

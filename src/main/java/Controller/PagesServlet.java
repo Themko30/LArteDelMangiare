@@ -3,8 +3,11 @@ package Controller;
 import Model.AccountDao;
 import Model.Category;
 import Model.CategoryDao;
+import Model.Condition;
 import Model.Paginator;
+import Model.Product;
 import Model.ProductDao;
+import Model.ProductSearch;
 import Model.SqlAccountDAO;
 import Model.SqlCategoryDAO;
 import Model.SqlProductDAO;
@@ -37,16 +40,54 @@ public class PagesServlet extends Controller implements ErrorHandler {
     try {
       String path = getPath(request);
       switch (path) {
-        case "/":
-          Paginator paginator = new Paginator(1, 30);
-          int size = 0;
-          size = categoryDao.countAll();
-          request.setAttribute("pages", paginator.getPages(size));
+        case "/home":
+          int intPageHome = parsePage(request);
+          Paginator paginatorHome = new Paginator(intPageHome, 30);
+          int sizeHome = 0;
+          sizeHome = categoryDao.countAll();
+          request.setAttribute("pages", paginatorHome.getPages(sizeHome));
           List<Category> categories = null;
-          categories = categoryDao.fetchCategories(paginator);
-          request.setAttribute("categories", categories);
+          categories = categoryDao.fetchCategories(paginatorHome);
+          getServletContext().setAttribute("categories", categories);
           request.getRequestDispatcher(view("site/home")).forward(request, response);
           break;
+        case "/info/privacy":
+          request.getRequestDispatcher(view("site/privacy")).forward(request, response);
+          break;
+        case "/products":
+          int intPagePro = parsePage(request);
+          Paginator paginatorProd = new Paginator(intPagePro, 30);
+          int sizePro = 0;
+          sizePro = productDao.countAll();
+          request.setAttribute("pages", paginatorProd.getPages(sizePro));
+          List<Product> products = null;
+          products = productDao.fetchProductsWithRelations(paginatorProd);
+          request.setAttribute("products", products);
+          request.getRequestDispatcher(view("site/products")).forward(request, response);
+          break;
+        case "/category":
+          int intPageCat = parsePage(request);
+          Paginator paginatorCat = new Paginator(intPageCat, 30);
+          int sizeCat = 0;
+          int catId = Integer.parseInt(request.getParameter("catId"));
+          sizeCat = productDao.countAllByCat(catId);
+          request.setAttribute("pages", paginatorCat.getPages(sizeCat));
+          List<Product> productsCat = null;
+          productsCat = productDao.fetchProductsByCat(catId, paginatorCat);
+          request.setAttribute("products", productsCat);
+          request.getRequestDispatcher(view("site/category")).forward(request, response);
+          break;
+        case "/search":
+          List<Condition> conditions = new ProductSearch().buildSearch(request);
+          List<Product> searchProducts =
+              conditions.isEmpty()
+                  ? productDao.fetchProductsWithRelations(new Paginator(1, 150))
+                  : productDao.search(conditions);
+          request.setAttribute("products", searchProducts);
+          request.getRequestDispatcher(view("site/search")).forward(request, response);
+          break;
+        default:
+          notFound();
           /*case "/dashboard":
            */
           /*authorize(request.getSession(false));*/
@@ -65,10 +106,10 @@ public class PagesServlet extends Controller implements ErrorHandler {
     } catch (SQLException ex) {
       log(ex.getMessage());
       response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
-    } /*catch (InvalidRequestException e) {
-        log(e.getMessage());
-        e.handle(request, response);
-      }*/
+    } catch (InvalidRequestException e) {
+      log(e.getMessage());
+      e.handle(request, response);
+    }
   }
 
   @Override

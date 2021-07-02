@@ -7,6 +7,6 @@
     </jsp:include>
 </head>
 <body>
-<% response.sendRedirect("./pages/"); %>
+<% response.sendRedirect("./pages/home?page=1"); %>
 </body>
 </html>

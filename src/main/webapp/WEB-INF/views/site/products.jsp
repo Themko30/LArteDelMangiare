@@ -13,24 +13,25 @@
     <%@include file="../partials/site/header.jsp" %>
     <section class="body grid-x">
         <img src="/LArteDelMangiare_war_exploded/IMAGES/logo.png" width="150" height="150">
-        <h1 style="color: white">Categories:</h1>
-        <c:forEach items="${categories}" var="category">
+        <h1 style="color: white">All Our Products:</h1>
+        <c:forEach items="${products}" var="product">
             <div class="card" style="width: 10rem;">
-                <img src="/LArteDelMangiare_war_exploded/covers/${category.image}"
+                <img src="/LArteDelMangiare_war_exploded/covers/${product.image}"
                      class="card-img-top"
-                     alt="...">
+                     alt="NO IMAGE">
                 <div class="card-body">
-                    <h3 class="card-title">${category.label}</h3>
-                    <p class="card-text">${category.description}</p>
-                    <a class="btn"
-                       href="/LArteDelMangiare_war_exploded/pages/category?page=1&catId=${category.id}">Go
-                        To The Category!</a>
+                    <h3 class="card-title">${product.prodName}</h3>
+                    <p class="card-text">${product.price}€</p>
+                    <p class="card-text">${product.label}</p>
+                    <p class="card-text">${product.category.label}</p>
+                    <p class="card-text">${product.country.label}</p>
+                    <a class="btn" href="#">Add To Cart!</a>
                 </div>
             </div>
         </c:forEach>
         <section class="grid-y cell">
             <jsp:include page="../partials/paginator.jsp">
-                <jsp:param name="resource" value="home"/>
+                <jsp:param name="resource" value="products"/>
             </jsp:include>
         </section>
     </section>

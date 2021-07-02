@@ -12,5 +12,5 @@ homeImg.addEventListener("click", function () {
 const homeText = document.getElementsByClassName(
     "navbar")[0].getElementsByTagName("h1")[0]
 homeText.addEventListener("click", function () {
-  window.location.href = '/LArteDelMangiare_war_exploded/pages/';
+  window.location.href = '/LArteDelMangiare_war_exploded/pages/home?page=1';
 })

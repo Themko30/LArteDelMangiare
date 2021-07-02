@@ -3,27 +3,16 @@
 <head>
     <jsp:include page="/WEB-INF/views/partials/head.jsp">
         <jsp:param name="title" value="Internal Error"/>
+        <jsp:param name="styles" value="site"/>
+        <jsp:param name="scripts" value="site"/>
     </jsp:include>
-
-    <style>
-      .internal-error {
-        background-image: url("../../../IMAGES/interror.jpg");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center center;
-      }
-
-      .internal-error > * {
-        color: black;
-      }
-    </style>
 
 </head>
 <body>
-<div class="internal-error">
+<div class=" body app grid-x justify-center align-center">
     <h1>INTERNAL ERROR!</h1>
     <br>
-    <a href="/LArteDelMangiare_war_exploded/pages/">Back To Homepage...</a>
+    <a href="/LArteDelMangiare_war_exploded/pages/home?page=1">Back To Homepage...</a>
 </div>
 </body>
 </html>

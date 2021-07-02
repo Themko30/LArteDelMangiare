@@ -97,16 +97,20 @@ public class SqlCategoryDAO extends SqlDao implements CategoryDao<SQLException> 
   }
 
   @Override
-  public Optional<Category> fetchCategoriesWithProducts(int categoryId) throws SQLException {
+  public Optional<Category> fetchCategoriesWithProducts(int categoryId, Paginator paginator)
+      throws SQLException {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("category", "cat");
       queryBuilder
           .select()
+          .limit(true)
           .innerJoin("products", "pro")
           .on("cat.id = pro.category_fk")
           .where("cat.id=?");
       try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
-        ps.setInt(1, categoryId);
+        ps.setInt(1, paginator.getOffset());
+        ps.setInt(2, paginator.getLimit());
+        ps.setInt(3, categoryId);
         ResultSet set = ps.executeQuery();
         CategoryExtractor categoryExtractor = new CategoryExtractor();
         Category category = null;

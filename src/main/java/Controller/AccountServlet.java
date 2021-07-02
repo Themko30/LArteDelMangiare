@@ -45,7 +45,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
           request.getRequestDispatcher(view("crm/accounts")).forward(request, response);
           break;
         case "/create":
-          request.getRequestDispatcher("/WEB-INF/views/crm/account.jsp").forward(request, response);
+          request.getRequestDispatcher(view("crm/account")).forward(request, response);
           break;
         case "/show":
           /*authorize(request.getSession(false));*/
@@ -60,16 +60,16 @@ public class AccountServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/secret":
-          request.getRequestDispatcher("/WEB-INF/views/crm/secret.jsp").forward(request, response);
+          request.getRequestDispatcher(view("crm/secret")).forward(request, response);
           break;
         case "/signin":
-          request.getRequestDispatcher("/WEB-INF/views/crm/signin.jsp").forward(request, response);
+          request.getRequestDispatcher(view("account/signupPage")).forward(request, response);
           break;
         case "/signup":
-          request.getRequestDispatcher("/WEB-INF/views/crm/signup.jsp").forward(request, response);
+          request.getRequestDispatcher(view("crm/signup")).forward(request, response);
           break;
         case "/profile":
-          request.getRequestDispatcher("/WEB-INF/views/crm/profile.jsp").forward(request, response);
+          request.getRequestDispatcher(view("crm/profile")).forward(request, response);
           break;
         case "/logout":
           HttpSession session = request.getSession(false);

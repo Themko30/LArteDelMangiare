@@ -21,10 +21,6 @@
   width: 100%;
 }
 
-.body > img {
-  cursor: pointer;
-}
-
 .body > a {
   text-decoration: none;
   color: var(--black);
@@ -71,7 +67,7 @@
   width: 100%;
 }
 
-.navbar > h1 {
+.navbar h1 {
   cursor: pointer;
 }
 

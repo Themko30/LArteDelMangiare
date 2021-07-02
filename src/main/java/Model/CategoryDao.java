@@ -15,5 +15,5 @@ public interface CategoryDao<E extends Exception> {
 
   boolean updateCategories(Category category) throws E;
 
-  Optional<Category> fetchCategoriesWithProducts(int categoryId) throws E;
+  Optional<Category> fetchCategoriesWithProducts(int categoryId, Paginator paginator) throws E;
 }

@@ -27,6 +27,11 @@
     </style>
 </head>
 <body>
+
+<c:if test="${not empty alert}">
+    <%@include file="../partials/alert.jsp" %>
+</c:if>
+
 <form class="app grid-x justify-center align-center" action="${context}/accounts/secret"
       method="post">
     <fieldset class="grid-y cell w50 login">

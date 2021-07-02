@@ -85,6 +85,11 @@ public class QueryBuilder {
     return this;
   }
 
+  public QueryBuilder where() {
+    query.append(" WHERE ");
+    return this;
+  }
+
   public QueryBuilder update(String... fields) {
     query.append("UPDATE ").append(table).append(" SET ");
     StringJoiner commaJoiner = new StringJoiner(",");
@@ -122,12 +127,7 @@ public class QueryBuilder {
   public QueryBuilder search(List<Condition> conditions) {
     StringJoiner searchJoiner = new StringJoiner(" AND ");
     for (Condition cn : conditions) {
-      if (cn.getOperator() == Operator.MATCH) {
-        String tmp = alias + '.' + cn.toString() + '%' + QM + '%';
-        searchJoiner.add(tmp);
-      } else {
-        searchJoiner.add(String.format("%s.%s%s", alias, cn.toString(), QM));
-      }
+      searchJoiner.add(String.format("%s.%s%s", alias, cn.toString(), QM));
     }
     query.append(searchJoiner);
     return this;

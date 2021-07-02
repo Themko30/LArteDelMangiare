@@ -68,11 +68,69 @@ public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
     }
   }
 
+  public List<Product> fetchProductsByCat(int catId, Paginator paginator) throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      QueryBuilder queryBuilder = new QueryBuilder("products", "pro");
+      String query = queryBuilder.select().where("category_fk=?").limit(true).generateQuery();
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setInt(1, catId);
+        ps.setInt(2, paginator.getOffset());
+        ps.setInt(3, paginator.getLimit());
+        ResultSet set = ps.executeQuery();
+        ProductExtractor productExtractor = new ProductExtractor();
+        List<Product> products = new ArrayList<>();
+        while (set.next()) {
+          products.add(productExtractor.extract(set));
+        }
+        return products;
+      }
+    }
+  }
+
+  @Override
+  public List<Product> fetchProductsWithRelations(Paginator paginator) throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ProductQuery.fetchProductsWithRelations();
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setInt(1, paginator.getOffset());
+        ps.setInt(2, paginator.getLimit());
+        ResultSet set = ps.executeQuery();
+        ProductExtractor productExtractor = new ProductExtractor();
+        CountryExtractor countryExtractor = new CountryExtractor();
+        CategoryExtractor categoryExtractor = new CategoryExtractor();
+        List<Product> products = new ArrayList<>();
+        while (set.next()) {
+          Product product = productExtractor.extract(set);
+          product.setCountry(countryExtractor.extract(set));
+          product.setCategory(categoryExtractor.extract(set));
+          products.add(product);
+        }
+        return products;
+      }
+    }
+  }
+
   @Override
   public int countAll() throws SQLException {
     try (Connection conn = source.getConnection()) {
       String query = ("SELECT COUNT(*) FROM products AS pro ");
       try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ResultSet set = ps.executeQuery();
+        int size = 0;
+        if (set.next()) {
+          size = set.getInt("COUNT(*)");
+        }
+        return size;
+      }
+    }
+  }
+
+  @Override
+  public int countAllByCat(int catId) throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ("SELECT COUNT(*) FROM products AS pro WHERE category_fk=?");
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setInt(1, catId);
         ResultSet set = ps.executeQuery();
         int size = 0;
         if (set.next()) {
@@ -146,6 +204,31 @@ public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
         ps.setInt(1, id);
         int rows = ps.executeUpdate();
         return rows == 1;
+      }
+    }
+  }
+
+  @Override
+  public List<Product> search(List<Condition> conditions) throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ProductQuery.search(conditions);
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        for (int i = 0; i < conditions.size(); i++) {
+          if (conditions.get(i).getOperator() == Operator.MATCH) {
+            ps.setObject(i + 1, "%" + conditions.get(i).getValue() + "%");
+          } else {
+            ps.setObject(i + 1, conditions.get(i).getValue());
+          }
+        }
+        ResultSet set = ps.executeQuery();
+        List<Product> products = new ArrayList<>();
+        while (set.next()) {
+          Product product = new ProductExtractor().extract(set);
+          product.setCountry(new CountryExtractor().extract(set));
+          product.setCategory(new CategoryExtractor().extract(set));
+          products.add(product);
+        }
+        return products;
       }
     }
   }
