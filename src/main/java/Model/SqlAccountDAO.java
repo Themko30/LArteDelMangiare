@@ -61,11 +61,12 @@ public class SqlAccountDAO extends SqlDao implements AccountDao<SQLException> {
               .select()
               .where("acc.email=?")
               .and("acc.password=?")
-              .and("acc.admin=true")
+              .and("acc.admin=?")
               .generateQuery();
       try (PreparedStatement ps = conn.prepareStatement(query)) {
         ps.setString(1, email);
         ps.setString(2, password);
+        ps.setBoolean(3, admin);
         ResultSet set = ps.executeQuery();
         Account account = null;
         if (set.next()) {
@@ -96,7 +97,7 @@ public class SqlAccountDAO extends SqlDao implements AccountDao<SQLException> {
     try (Connection conn = source.getConnection()) {
       QueryBuilder queryBuilder = new QueryBuilder("account", "acc");
       queryBuilder.insert(
-          "id", "address", "username", "password", "lastname", "firstname", "email", "admin");
+          "id", "address", "username", "password", "firstname", "lastname", "email", "admin");
       try (PreparedStatement ps = conn.prepareStatement(queryBuilder.generateQuery())) {
         ps.setInt(1, account.getId());
         ps.setString(2, account.getAddress());

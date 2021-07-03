@@ -27,7 +27,7 @@ final class ProductQuery {
     QueryBuilder builder = new QueryBuilder(PRODUCT_TABLE, PRODUCT_ALIAS);
     builder.select().innerJoin("category", "cat").on("pro.category_fk = cat.id");
     builder.innerJoin("country", "cou").on("pro.country_fk = cou.id");
-    if (conditionList.isEmpty()) {
+    if (!conditionList.isEmpty()) {
       builder.where().search(conditionList);
     }
     return builder.generateQuery();

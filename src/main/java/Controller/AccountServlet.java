@@ -63,10 +63,10 @@ public class AccountServlet extends Controller implements ErrorHandler {
           request.getRequestDispatcher(view("crm/secret")).forward(request, response);
           break;
         case "/signin":
-          request.getRequestDispatcher(view("account/signupPage")).forward(request, response);
+          request.getRequestDispatcher(view("account/signinPage")).forward(request, response);
           break;
         case "/signup":
-          request.getRequestDispatcher(view("crm/signup")).forward(request, response);
+          request.getRequestDispatcher(view("account/signupPage")).forward(request, response);
           break;
         case "/profile":
           request.getRequestDispatcher(view("crm/profile")).forward(request, response);
@@ -78,7 +78,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
           String redirect =
               accountSession.isAdmin()
                   ? "/LArteDelMangiare_war_exploded/accounts/secret"
-                  : "/LArteDelMangiare_war_exploded/accounts/signin";
+                  : "/LArteDelMangiare_war_exploded/pages/home?page=1";
           session.removeAttribute("accountSession");
           session.invalidate();
           response.sendRedirect(redirect);
@@ -115,6 +115,22 @@ public class AccountServlet extends Controller implements ErrorHandler {
             response.sendRedirect("/LArteDelMangiare_war_exploded/crm/dashboard");
           } else {
             notAllowed();
+          }
+          break;
+        case "/signin":
+          request.setAttribute("back", view("crm/secret"));
+          validate(AccountValidator.validateSignin(request));
+          Account tmpAccount2 = new Account();
+          tmpAccount2.setEmail(request.getParameter("email"));
+          tmpAccount2.setPassword(request.getParameter("password"));
+          Optional<Account> optionalAccount2 =
+              accountDao.findAccount(tmpAccount2.getEmail(), tmpAccount2.getPassword(), false);
+          if (optionalAccount2.isPresent()) {
+            AccountSession accountSession = new AccountSession(optionalAccount2.get());
+            request.getSession(true).setAttribute("accountSession", accountSession);
+            response.sendRedirect("/LArteDelMangiare_war_exploded/pages/home?page=1");
+          } else {
+            notFound();
           }
           break;
         case "/create":

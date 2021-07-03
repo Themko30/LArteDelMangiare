@@ -88,20 +88,6 @@ public class PagesServlet extends Controller implements ErrorHandler {
           break;
         default:
           notFound();
-          /*case "/dashboard":
-           */
-          /*authorize(request.getSession(false));*/
-          /*
-            int sizeAccounts = 0;
-            sizeAccounts = accountDao.countAll();
-            request.setAttribute("sizeAccounts", sizeAccounts);
-            int sizeProducts = 0;
-            sizeProducts = productDao.sum();
-            request.setAttribute("sizeProducts", sizeProducts);
-            request.getRequestDispatcher(view("crm/home")).forward(request, response);
-            break;
-          default:
-            notFound();*/
       }
     } catch (SQLException ex) {
       log(ex.getMessage());

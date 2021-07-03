@@ -16,8 +16,8 @@ public class ProductSearch implements SearchBuilder {
       String value = request.getParameter(param);
       if (value != null && !value.isBlank()) {
         switch (param) {
-          case "prodname":
-            conditions.add(new Condition("prodname", Operator.MATCH, value));
+          case "prodName":
+            conditions.add(new Condition("prodName", Operator.MATCH, value));
             break;
           case "countryId":
             conditions.add(new Condition("country_fk", Operator.EQ, value));
