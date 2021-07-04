@@ -50,8 +50,9 @@
         <label for="admin" class="field cell">
             Is Admin?
             <select name="admin" id="admin">
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+                <option disabled selected value> -- Select an option --</option>
+                <option value="false">No</option>
+                <option value="true">Yes</option>
             </select>
         </label>
 

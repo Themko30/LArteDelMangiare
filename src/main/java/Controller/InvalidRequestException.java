@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Alert;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;

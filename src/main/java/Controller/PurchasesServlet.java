@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Alert;
 import Model.Paginator;
 import Model.Purchase;
 import Model.PurchaseDao;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "PurchasesServlet", value = "/purchases/*")
 public class PurchasesServlet extends Controller implements ErrorHandler {
@@ -59,6 +61,13 @@ public class PurchasesServlet extends Controller implements ErrorHandler {
           /*authorize(request.getSession(false));*/
           request.getRequestDispatcher(view("crm/purchase")).forward(request, response);
           break;
+        case "/profile":
+          HttpSession accSession = request.getSession(false);
+          authenticate(accSession);
+          int accId = getAccountSession(accSession).getId();
+          List<Purchase> accountPurchases = purchaseDao.fetchPurchasesWithProducts(accId);
+          request.setAttribute("purchases", accountPurchases);
+          request.getRequestDispatcher(view("site/profile")).forward(request, response);
       }
     } catch (SQLException ex) {
       log(ex.getMessage());

@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Alert;
 import Model.Country;
 import Model.CountryDao;
 import Model.Paginator;

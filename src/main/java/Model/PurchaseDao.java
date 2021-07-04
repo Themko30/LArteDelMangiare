@@ -7,7 +7,7 @@ public interface PurchaseDao<E extends Exception> {
 
   List<Purchase> fetchPurchases(Paginator paginator) throws E;
 
-  List<Purchase> fetchPurchasesWithProducts(int accountId, Paginator paginator) throws E;
+  List<Purchase> fetchPurchasesWithProducts(int accountId) throws E;
 
   Optional<Purchase> fetchPurchase(int id) throws E;
 

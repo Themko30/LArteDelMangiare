@@ -8,7 +8,10 @@ final class AccountValidator {
   static RequestValidator validateSignin(HttpServletRequest request) {
     RequestValidator validator = new RequestValidator(request);
     validator.assertEmail("email", "Wrong Email or Password");
-    validator.assertMatch("password", Pattern.compile("^\\w{5,30}$"), "Wrong Email or Password");
+    validator.assertMatch(
+        "password",
+        Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"),
+        "Wrong Email or Password");
     return validator;
   }
 

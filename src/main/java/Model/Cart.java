@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.List;
+import java.util.Optional;
 
 public class Cart {
 
@@ -22,12 +23,33 @@ public class Cart {
     return items.add(new CartItem(product, quantity));
   }
 
-  public double total() {
-    double total = 0;
-    for (CartItem item : items) {
-      total += item.total();
+  public boolean addProduct(Product product, int quantity) {
+    Optional<CartItem> optionalCartItem = find(product.getId());
+    if (optionalCartItem.isPresent()) {
+      optionalCartItem.get().setQuantity(quantity);
+      return true;
+    } else {
+      return items.add(new CartItem(product, quantity));
     }
-    return total;
-    // return items.stream().mapToDouble(ct -> ct.total()).reduce(0.0, Double::sum));
+  }
+
+  public Optional<CartItem> find(int id) {
+    return items.stream().filter(it -> it.getProduct().getId() == id).findFirst();
+  }
+
+  public boolean removeProducts(int id) {
+    return items.removeIf(it -> it.getProduct().getId() == id);
+  }
+
+  public int quantity() {
+    return items.stream().mapToInt(CartItem::getQuantity).reduce(0, Integer::sum);
+  }
+
+  public double total() {
+    return items.stream().mapToDouble(ct -> ct.total()).reduce(0.0, Double::sum);
+  }
+
+  public void resetCart() {
+    items.clear();
   }
 }

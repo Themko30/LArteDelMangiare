@@ -3,7 +3,11 @@ package Model;
 public class CartItem {
 
   private final Product product;
-  private final int quantity;
+  private int quantity;
+
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
+  }
 
   public CartItem(Product product, int quantity) {
     this.product = product;

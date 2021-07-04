@@ -12,13 +12,10 @@ final class PurchaseQuery {
   }
 
   static String fetchPurchasesWithProducts() {
-    QueryBuilder builder = new QueryBuilder(PURCHASE_QUERY, PURCHASE_ALIAS);
-    builder.select().innerJoin("purchase", "pur").on("pp.idpurchase = pur.id");
-    builder.innerJoin("products", "pro").on("pp.idproducts = pro.id");
-    builder.outerJoin(true, "country", "cou").on("cou.id = pro.country_fk");
-    builder.outerJoin(true, "category", "cat").on("cat.id = pro.category_fk");
-    builder.where("pur.account = ?");
-    builder.limit(true);
+    QueryBuilder builder = new QueryBuilder("purchase_products", "pp");
+    builder.select().innerJoin(PURCHASE_QUERY, PURCHASE_ALIAS).on("pp.purchase_fk = pur.id");
+    builder.innerJoin("products", "pro").on("pp.product_fk = pro.id");
+    builder.where("pur.account_fk=?");
     return builder.generateQuery();
   }
 

@@ -37,14 +37,11 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
   }
 
   @Override
-  public List<Purchase> fetchPurchasesWithProducts(int accountId, Paginator paginator)
-      throws SQLException {
+  public List<Purchase> fetchPurchasesWithProducts(int accountId) throws SQLException {
     try (Connection conn = source.getConnection()) {
       String query = PurchaseQuery.fetchPurchasesWithProducts();
       try (PreparedStatement ps = conn.prepareStatement(query)) {
         ps.setInt(1, accountId);
-        ps.setInt(2, paginator.getOffset());
-        ps.setInt(3, paginator.getLimit());
         ResultSet set = ps.executeQuery();
         Map<Integer, Purchase> purchaseMap = new LinkedHashMap<>();
         PurchaseExtractor purchaseExtractor = new PurchaseExtractor();
@@ -57,13 +54,16 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
             Purchase purchase = purchaseExtractor.extract(set);
             purchase.setCart(new Cart(new ArrayList<>()));
             purchaseMap.put(purchaseId, purchase);
+            purchaseMap
+                .get(purchaseId)
+                .getCart()
+                .addProduct(productExtractor.extract(set), set.getInt("pp.quantity"));
+          } else {
+            purchaseMap
+                .get(purchaseId)
+                .getCart()
+                .addProduct(productExtractor.extract(set), set.getInt("pp.quantity"));
           }
-          Product product = productExtractor.extract(set);
-          Category category = categoryExtractor.extract(set);
-          Country country = countryExtractor.extract(set);
-          product.setCategory(category);
-          product.setCountry(country);
-          purchaseMap.get(purchaseId).getCart().addProducts(product, set.getInt("pp.quantity"));
         }
         return new ArrayList<>(purchaseMap.values());
       }

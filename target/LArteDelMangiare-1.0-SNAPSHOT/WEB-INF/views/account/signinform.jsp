@@ -2,6 +2,9 @@
       action="/LArteDelMangiare_war_exploded/accounts/signin"
       method="post">
     <fieldset class="grid-y cell w50 login">
+        <c:if test="${not empty alert}">
+            <%@include file="../partials/alert.jsp" %>
+        </c:if>
         <h2>Login</h2>
         <span>Email</span>
         <label for="email" class="field">

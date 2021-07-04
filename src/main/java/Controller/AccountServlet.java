@@ -3,6 +3,7 @@ package Controller;
 import Model.Account;
 import Model.AccountDao;
 import Model.AccountSession;
+import Model.Alert;
 import Model.Paginator;
 import Model.SqlAccountDAO;
 import java.io.IOException;
@@ -102,8 +103,8 @@ public class AccountServlet extends Controller implements ErrorHandler {
       String path = getPath(request);
       switch (path) {
         case "/secret":
-          request.setAttribute("back", view("crm/secret"));
-          validate(AccountValidator.validateSignin(request));
+          request.setAttribute("back", view("account/signinPage"));
+          /*validate(AccountValidator.validateSignin(request));*/
           Account tmpAccount = new Account();
           tmpAccount.setEmail(request.getParameter("email"));
           tmpAccount.setPassword(request.getParameter("password"));
@@ -118,7 +119,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/signin":
-          request.setAttribute("back", view("crm/secret"));
+          request.setAttribute("back", view("account/signinPage"));
           validate(AccountValidator.validateSignin(request));
           Account tmpAccount2 = new Account();
           tmpAccount2.setEmail(request.getParameter("email"));
@@ -130,7 +131,28 @@ public class AccountServlet extends Controller implements ErrorHandler {
             request.getSession(true).setAttribute("accountSession", accountSession);
             response.sendRedirect("/LArteDelMangiare_war_exploded/pages/home?page=1");
           } else {
-            notFound();
+            request.setAttribute("alert", new Alert(List.of("Account Not Found!"), "danger"));
+            request.getRequestDispatcher(view("account/signinPage")).forward(request, response);
+          }
+          break;
+        case "/signup":
+          request.setAttribute("back", view("account/signupPage"));
+          validate(AccountValidator.validateForm(request));
+          Account accountUser = new Account();
+          accountUser.setUsername(request.getParameter("userName"));
+          accountUser.setFirstName(request.getParameter("firstName"));
+          accountUser.setLastName(request.getParameter("lastName"));
+          accountUser.setAddress(request.getParameter("address"));
+          accountUser.setEmail(request.getParameter("email"));
+          accountUser.setPassword(request.getParameter("password"));
+          accountUser.setAdmin(false);
+          if (accountDao.createAccount(accountUser)) {
+            response.setStatus(HttpServletResponse.SC_CREATED);
+            request.setAttribute(
+                "alert", new Alert(List.of("Account Created! Please log"), "success"));
+            request.getRequestDispatcher(view("account/signinPage")).forward(request, response);
+          } else {
+            internalError();
           }
           break;
         case "/create":
@@ -144,7 +166,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
           account.setAddress(request.getParameter("address"));
           account.setEmail(request.getParameter("email"));
           account.setPassword(request.getParameter("password"));
-          account.setAdmin(Boolean.parseBoolean(request.getParameter("admin")));
+          account.setAdmin(Boolean.valueOf(request.getParameter("admin")));
           if (accountDao.createAccount(account)) {
             request.setAttribute("alert", new Alert(List.of("Account Created!"), "success"));
             response.setStatus(HttpServletResponse.SC_CREATED);
