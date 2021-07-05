@@ -40,7 +40,13 @@
                     <p class="card-text">${product.label}</p>
                     <p class="card-text">${product.category.label}</p>
                     <p class="card-text">${product.country.label}</p>
-                    <a class="btn" href="#">Add To Cart!</a>
+                    <form method="post" action="#">
+                        <label for="quantity" class="field cell">
+                            <input type="number" id="quantity" name="quantity"
+                                   placeholder="Quantity" value="1">
+                            <button type="submit" class="btn primary">Buy!</button>
+                        </label>
+                    </form>
                 </div>
             </div>
         </c:forEach>

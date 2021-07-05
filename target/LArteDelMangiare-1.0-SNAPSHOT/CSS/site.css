@@ -7,6 +7,27 @@
   height: 100vh;
 }
 
+.accordion {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-image: linear-gradient(var(--primary), var(--secondary));
+  background-clip: border-box;
+  border-radius: 0.5rem;
+  margin: 0.5rem;
+}
+
+.table-accordion {
+  border-spacing: 0.5rem;
+}
+
+.table-accordion a {
+  text-decoration: none;
+  color: black;
+}
+
 .search {
   font-family: "Roboto Slab", serif;
   font-style: normal;
