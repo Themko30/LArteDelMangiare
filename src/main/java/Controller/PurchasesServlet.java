@@ -68,6 +68,7 @@ public class PurchasesServlet extends Controller implements ErrorHandler {
           List<Purchase> accountPurchases = purchaseDao.fetchPurchasesWithProducts(accId);
           request.setAttribute("purchases", accountPurchases);
           request.getRequestDispatcher(view("site/profile")).forward(request, response);
+          break;
       }
     } catch (SQLException ex) {
       log(ex.getMessage());

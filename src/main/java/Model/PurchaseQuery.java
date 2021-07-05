@@ -13,8 +13,8 @@ final class PurchaseQuery {
 
   static String fetchPurchasesWithProducts() {
     QueryBuilder builder = new QueryBuilder("purchase_products", "pp");
-    builder.select().innerJoin(PURCHASE_QUERY, PURCHASE_ALIAS).on("pp.purchase_fk = pur.id");
-    builder.innerJoin("products", "pro").on("pp.product_fk = pro.id");
+    builder.select().innerJoin(PURCHASE_QUERY, PURCHASE_ALIAS).on("pp.idpurchase = pur.id");
+    builder.innerJoin("products", "pro").on("pp.idproducts = pro.id");
     builder.where("pur.account_fk=?");
     return builder.generateQuery();
   }

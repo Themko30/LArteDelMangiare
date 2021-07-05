@@ -6,9 +6,7 @@
         <a href="/LArteDelMangiare_war_exploded/purchases?page=1">Purchases Management</a>
         <a href="/LArteDelMangiare_war_exploded/categories?page=1">Categories Management</a>
         <a href="/LArteDelMangiare_war_exploded/countries?page=1">Countries Management</a>
-        <a href="#">Profile</a>
         <a href="/LArteDelMangiare_war_exploded/accounts/logout">Logout</a>
-        <a href="http://localhost:8080/LArteDelMangiare_war_exploded/pages/home?page=1">Site
-            Homepage</a>
+        <a href="/LArteDelMangiare_war_exploded/pages/home?page=1">Site Homepage</a>
     </nav>
 </aside>

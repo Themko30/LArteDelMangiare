@@ -31,13 +31,14 @@
             </div>
         </div>
         <a href="/LArteDelMangiare_war_exploded/pages/search">Search Products</a>
-        <a href="/LArteDelMangiare_war_exploded/accounts/signin">Login</a>
         <c:choose>
             <c:when test="${accountSession.username == null}">
                 <a href="/LArteDelMangiare_war_exploded/accounts/signup">Register</a>
+                <a href="/LArteDelMangiare_war_exploded/accounts/signin">Login</a>
             </c:when>
             <c:otherwise>
                 <a href="/LArteDelMangiare_war_exploded/accounts/logout">Logout</a>
+                <a href="/LArteDelMangiare_war_exploded/purchases/profile">Profile</a>
             </c:otherwise>
         </c:choose>
     </nav>
