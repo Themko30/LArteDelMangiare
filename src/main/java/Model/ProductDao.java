@@ -13,6 +13,8 @@ public interface ProductDao<E extends Exception> {
 
   List<Product> fetchProductsWithRelations(Paginator paginator) throws E;
 
+  public Optional<Product> fetchProductWithRelations(int id) throws E;
+
   int countAll() throws E;
 
   int countAllByCat(int catId) throws E;

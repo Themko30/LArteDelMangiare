@@ -61,6 +61,17 @@ public class ProductServlet extends Controller implements ErrorHandler {
             notFound();
           }
           break;
+        case "/details":
+          validate(CommonValidator.validateId(request));
+          int idDet = Integer.parseInt(request.getParameter("id"));
+          Optional<Product> optProduct = productDao.fetchProductWithRelations(idDet);
+          if (optProduct.isPresent()) {
+            request.setAttribute("product", optProduct.get());
+            request.getRequestDispatcher(view("site/details")).forward(request, response);
+          } else {
+            notFound();
+          }
+          break;
         case "/create":
           /*authorize(request.getSession(false));*/
           request.getRequestDispatcher(view("crm/product")).forward(request, response);

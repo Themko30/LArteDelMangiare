@@ -6,7 +6,7 @@
     <jsp:include page="../partials/head.jsp">
         <jsp:param name="title" value="Welcome to L`Arte Del Mangiare"/>
         <jsp:param name="styles" value="site"/>
-        <jsp:param name="scripts" value="site"/>
+        <jsp:param name="scripts" value="site,catalogue"/>
     </jsp:include>
 
     <style>
@@ -41,12 +41,14 @@
                     <p class="card-text">${product.category.label}</p>
                     <p class="card-text">${product.country.label}</p>
                     <form method="post" action="#">
+                        <input type="hidden" name="id" value="${product.id}">
                         <label for="quantity" class="field cell">
                             <input type="number" id="quantity" name="quantity"
                                    placeholder="Quantity" value="1">
                             <button type="submit" class="btn primary">Buy!</button>
                         </label>
                     </form>
+                    <a href="/LArteDelMangiare_war_exploded/products/details?id=${product.id}">Details</a>
                 </div>
             </div>
         </c:forEach>

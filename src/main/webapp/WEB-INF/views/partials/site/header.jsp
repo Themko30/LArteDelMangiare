@@ -11,10 +11,18 @@
                     <p style="padding: 5px">Welcome Unregistered User!</p>
                 </c:otherwise>
             </c:choose>
-            <span class="shopping-cart">
-        <%@ include file="../../../../ICONS/shopping_cart.svg" %>
-        <span class="badge">0</span>
-    </span>
+            <a class="shopping-cart"
+               href="${accountSession.username == null ? "/LArteDelMangiare_war_exploded/accounts/signin" : "/LArteDelMangiare_war_exploded/carts/show"}">
+                <%@ include file="../../../../ICONS/shopping_cart.svg" %>
+                <c:choose>
+                    <c:when test="${not empty accountCart}">
+                        <span class="badge">${accountCart.quantity()}</span>
+                    </c:when>
+                    <c:otherwise>
+                        <span class="badge">0</span>
+                    </c:otherwise>
+                </c:choose>
+            </a>
         </div>
     </div>
     <nav class="menu grid-x cell align-center">

@@ -5,7 +5,4 @@
             <li>${msg}</li>
         </c:forEach>
     </ol>
-    <span id="notification-close" class="close">
-        <%@include file="../../../ICONS/back.svg" %>
-    </span>
 </div>

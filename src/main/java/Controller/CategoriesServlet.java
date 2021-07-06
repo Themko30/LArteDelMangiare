@@ -16,6 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 @WebServlet(name = "CategoriesServlet", value = "/categories/*")
 @MultipartConfig
@@ -64,6 +66,20 @@ public class CategoriesServlet extends Controller implements ErrorHandler {
           /*authorize(request.getSession(false));*/
           request.getRequestDispatcher(view("crm/category")).forward(request, response);
           break;
+        case "/api":
+          if (isAjax(request)) {
+            List<Category> cat = categoryDao.fetchCategories(new Paginator(1, 50));
+            JSONObject root = new JSONObject();
+            JSONArray arr = new JSONArray();
+            root.put("categories", arr);
+            cat.forEach(c -> arr.put(c.toJson()));
+            sendJson(response, root);
+            break;
+          } else {
+            notFound();
+          }
+        default:
+          notFound();
       }
     } catch (SQLException ex) {
       log(ex.getMessage());

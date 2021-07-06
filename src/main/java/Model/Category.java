@@ -6,8 +6,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 import javax.servlet.http.Part;
+import org.json.JSONObject;
 
-public class Category {
+public class Category implements JsonSerializable {
 
   private int id;
   private String label, description, image;
@@ -62,5 +63,21 @@ public class Category {
       File file = new File(uploadPath + image);
       Files.copy(fileStream, file.toPath());
     }
+  }
+
+  public int countProducts() {
+    return products.size();
+  }
+
+  public boolean hasProducts() {
+    return products.isEmpty();
+  }
+
+  @Override
+  public JSONObject toJson() {
+    JSONObject obj = new JSONObject();
+    obj.put("id", id);
+    obj.put("label", label);
+    return obj;
   }
 }

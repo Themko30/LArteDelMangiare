@@ -111,6 +111,27 @@ public class SqlProductDAO extends SqlDao implements ProductDao<SQLException> {
   }
 
   @Override
+  public Optional<Product> fetchProductWithRelations(int id) throws SQLException {
+    try (Connection conn = source.getConnection()) {
+      String query = ProductQuery.fetchProductWithRelations();
+      try (PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setInt(1, id);
+        ResultSet set = ps.executeQuery();
+        ProductExtractor productExtractor = new ProductExtractor();
+        CountryExtractor countryExtractor = new CountryExtractor();
+        CategoryExtractor categoryExtractor = new CategoryExtractor();
+        Product product = null;
+        if (set.next()) {
+          product = productExtractor.extract(set);
+          product.setCountry(countryExtractor.extract(set));
+          product.setCategory(categoryExtractor.extract(set));
+        }
+        return Optional.ofNullable(product);
+      }
+    }
+  }
+
+  @Override
   public int countAll() throws SQLException {
     try (Connection conn = source.getConnection()) {
       String query = ("SELECT COUNT(*) FROM products AS pro ");

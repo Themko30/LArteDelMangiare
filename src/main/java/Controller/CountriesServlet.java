@@ -13,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 @WebServlet(name = "CountriesServlet", value = "/countries/*")
 public class CountriesServlet extends Controller implements ErrorHandler {
@@ -59,6 +61,20 @@ public class CountriesServlet extends Controller implements ErrorHandler {
           /*authorize(request.getSession(false));*/
           request.getRequestDispatcher(view("crm/country")).forward(request, response);
           break;
+        case "/api":
+          if (isAjax(request)) {
+            List<Country> cat = countryDao.fetchCountries(new Paginator(1, 100));
+            JSONObject root = new JSONObject();
+            JSONArray arr = new JSONArray();
+            root.put("countries", arr);
+            cat.forEach(c -> arr.put(c.toJson()));
+            sendJson(response, root);
+            break;
+          } else {
+            notFound();
+          }
+        default:
+          notFound();
       }
     } catch (SQLException ex) {
       log(ex.getMessage());
