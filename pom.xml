@@ -14,7 +14,6 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
     <junit.version>5.7.1</junit.version>
-    <java.version>15</java.version>
   </properties>
 
   <dependencies>
@@ -48,15 +47,6 @@
     </dependency>
   </dependencies>
 
-  <repositories>
-    <repository>
-      <id>lib</id>
-      <!-- location -->
-      <url>file:${project.basedir}/src/main/webapp/WEB-INF/lib</url>
-    </repository>
-  </repositories>
-
-
   <build>
     <plugins>
       <plugin>
@@ -68,11 +58,10 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>15</source>
-          <target>15</target>
+          <source>11</source>
+          <target>11</target>
         </configuration>
       </plugin>
     </plugins>
   </build>
 </project>
-
