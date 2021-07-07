@@ -41,6 +41,11 @@ function dictionary() {
   };
 }
 
+const form = document.getElementById('signin')
+if (form) {
+  validateForm(form);
+}
+
 /**
  *
  * @param {HTMLFormElement} form the form to validate

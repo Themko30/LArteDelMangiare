@@ -119,9 +119,19 @@ public class SqlPurchaseDAO extends SqlDao implements PurchaseDao<SQLException> 
       conn.setAutoCommit(false);
       String query = PurchaseQuery.createPurchase();
       String query2 = PurchaseQuery.insertCart();
-      try (PreparedStatement ps = conn.prepareStatement(query);
+      try (PreparedStatement ps =
+              conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
           PreparedStatement psAssoc = conn.prepareStatement(query2)) {
+        ps.setString(1, purchase.getCardCircuit());
+        ps.setLong(2, purchase.getPanCard());
+        ps.setDate(3, Date.valueOf(purchase.getCreated()));
+        ps.setDouble(4, purchase.getTotal());
+        ps.setInt(5, purchase.getAccountNum());
         int rows = ps.executeUpdate();
+        ResultSet setId = ps.getGeneratedKeys();
+        setId.next();
+        int id = setId.getInt(1);
+        purchase.setId(id);
         int total = rows;
         for (CartItem item : purchase.getCart().getItems()) {
           psAssoc.setInt(1, item.getProduct().getId());

@@ -14,3 +14,4 @@ const homeText = document.getElementsByClassName(
 homeText.addEventListener("click", function () {
   window.location.href = '/LArteDelMangiare_war_exploded/pages/home?page=1';
 })
+

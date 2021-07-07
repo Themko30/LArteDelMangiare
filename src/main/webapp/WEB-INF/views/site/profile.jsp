@@ -37,7 +37,7 @@
                                 <c:forEach items="${purchase.cart.items}" var="item">
                                     <tr>
                                         <td data-head="Product">
-                                            <a href="#">${item.product.prodName}</a>
+                                            <a href="/LArteDelMangiare_war_exploded/products/details?id=${product.id}">${item.product.prodName}</a>
                                         </td>
                                         <td data-head="Price">${item.product.price}</td>
                                         <td data-head="Quantity">${item.quantity}</td>

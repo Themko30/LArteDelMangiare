@@ -33,7 +33,7 @@ final class PurchaseQuery {
 
   static String insertCart() {
     QueryBuilder builder = new QueryBuilder("purchase_products", "pp");
-    builder.insert("product_fk", "purchase_fk", "quantity");
+    builder.insert("idproducts", "idpurchase", "quantity");
     return builder.generateQuery();
   }
 }

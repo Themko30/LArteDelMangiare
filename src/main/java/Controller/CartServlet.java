@@ -3,25 +3,32 @@ package Controller;
 import Model.Cart;
 import Model.Product;
 import Model.ProductDao;
+import Model.Purchase;
+import Model.PurchaseDao;
 import Model.SqlProductDAO;
+import Model.SqlPurchaseDAO;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "CartServlet", value = "/carts/*")
 public class CartServlet extends Controller implements ErrorHandler {
 
   private ProductDao<SQLException> productDao;
+  private PurchaseDao<SQLException> purchaseDao;
 
   @Override
   public void init() throws ServletException {
     super.init();
     productDao = new SqlProductDAO(source);
+    purchaseDao = new SqlPurchaseDAO(source);
   }
 
   @Override
@@ -72,6 +79,23 @@ public class CartServlet extends Controller implements ErrorHandler {
             response.sendRedirect("/LArteDelMangiare_war_exploded/carts/show");
           } else {
             notFound();
+          }
+          break;
+        case "/createClient":
+          HttpSession session = request.getSession(false);
+          authenticate(session);
+          Purchase customerPurchase = new Purchase();
+          customerPurchase.setAccountNum(getAccountSession(session).getId());
+          customerPurchase.setCart(getSessionCart(session));
+          customerPurchase.setTotal(getSessionCart(session).total());
+          customerPurchase.setCreated(LocalDate.now());
+          customerPurchase.setCardCircuit(request.getParameter("circuit"));
+          customerPurchase.setPanCard(Long.parseLong(request.getParameter("number")));
+          if (purchaseDao.createPurchase(customerPurchase)) {
+            getSessionCart(session).resetCart();
+            response.sendRedirect("/LArteDelMangiare_war_exploded/purchases/profile");
+          } else {
+            internalError();
           }
           break;
         default:
