@@ -29,10 +29,10 @@ final class AccountValidator {
         "address", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Address Between 5 and 30 Cha");
     validator.assertMatch(
         "email", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Email Between 5 and 30 Cha");
-    validator.assertMatch(
-        "password",
-        Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"),
-        "Password Must contain at least one number and one uppercase and lowercase letter, and at least 8 and max 16 characters");
+    /*validator.assertMatch(
+    "password",
+    Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"),
+    "Password Must contain at least one number and one uppercase and lowercase letter, and at least 8 and max 16 characters");*/
     return validator;
   }
 }
