@@ -48,6 +48,14 @@
     </dependency>
   </dependencies>
 
+  <repositories>
+    <repository>
+      <id>lib</id>
+      <!-- location -->
+      <url>file:${project.basedir}/src/main/webapp/WEB-INF/lib</url>
+    </repository>
+  </repositories>
+
 
   <build>
     <plugins>
