@@ -17,39 +17,40 @@
 
         <label for="userName" class="field cell">
             <input id="userName" name="userName" placeholder="User Name" type="text"
-                   value="${account.username}">
+                   value="${account.username}" required>
         </label>
         <small class="errMsg cell"></small>
 
         <label for="firstName" class="field cell">
             <input id="firstName" name="firstName" placeholder="Name" type="text"
-                   value="${account.firstName}">
+                   value="${account.firstName}" required>
         </label>
         <small class="errMsg cell"></small>
 
         <label for="lastName" class="field cell">
             <input id="lastName" name="lastName" placeholder="Surname" type="text"
-                   value="${account.lastName}">
+                   value="${account.lastName}" required>
         </label>
         <small class="errMsg cell"></small>
 
         <label for="address" class="field cell">
             <input id="address" name="address" placeholder="Address" type="text"
-                   value="${account.address}">
+                   value="${account.address}" required>
         </label>
         <small class="errMsg cell"></small>
 
         <label for="email" class="field cell">
             <input id="email" name="email" placeholder="Email" type="email"
-                   value="${account.email}">
+                   value="${account.email}" required>
         </label>
         <small class="errMsg cell"></small>
 
         <c:if test="${isCreate}">
             <label for="password" class="cell field">
                 <input type="password" id="password" placeholder="Password" name="password"
-                       value="${account.password}">
+                       value="${account.password}" required minlength="8" maxlength="16">
             </label>
+            <small class="errMsg cell"></small>
         </c:if>
 
         <label for="admin" class="field cell">
@@ -60,7 +61,6 @@
                 <option value="true">Yes</option>
             </select>
         </label>
-        <small class="errMsg cell"></small>
 
         <button type="submit" class=" cell btn primary">${isCreate ? 'Create' : 'Update'}</button>
     </fieldset>

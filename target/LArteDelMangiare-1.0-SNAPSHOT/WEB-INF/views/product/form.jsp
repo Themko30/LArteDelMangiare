@@ -9,7 +9,7 @@
 
 <form method="post"
       action="/LArteDelMangiare_war_exploded/products/${isCreate ? 'create' : 'update'}"
-      enctype="multipart/form-data">
+      enctype="multipart/form-data" id="form">
     <c:if test="${not isCreate}">
         <input type="hidden" name="id" value="${product.id}">
     </c:if>
@@ -18,23 +18,24 @@
 
         <label for="fullName" class="field cell">
             <input id="fullName" name="fullName" placeholder="Name" type="text"
-                   value="${product.prodName}">
+                   value="${product.prodName}" required>
         </label>
         <small class="errMsg cell"></small>
 
         <label for="price" class="field cell">
-            <input id="price" name="price" placeholder="Price" type="text" value="${product.price}">
+            <input id="price" name="price" placeholder="Price" type="text" value="${product.price}"
+                   required min="1">
         </label>
         <small class="errMsg cell"></small>
 
         <label for="quantity" class="field cell">
             <input id="quantity" name="quantity" placeholder="Quantity" type="text"
-                   value="${product.quantity}">
+                   value="${product.quantity}" required min="1">
         </label>
         <small class="errMsg cell"></small>
 
         <label for="catId" class="field cell">
-            <select name="catId" id="catId">
+            <select name="catId" id="catId" required>
                 <option value="1">Hosomaki</option>
                 <option value="2">Uramaki</option>
                 <option value="3">Gunkan</option>
@@ -47,7 +48,7 @@
         <small class="errMsg cell"></small>
 
         <label for="couId" class="field cell">
-            <select name="couId" id="couId">
+            <select name="couId" id="couId" required>
                 <option value="1">Japan</option>
                 <option value="2">South Korea</option>
                 <option value="3">China</option>
@@ -58,7 +59,7 @@
 
         <label for="description" class="field cell">
             <input id="description" name="description"
-                   placeholder="Describe the product" type="text" value="${product.label}">
+                   placeholder="Describe the product" type="text" value="${product.label}" required>
         </label>
         <small class="errMsg cell"></small>
 

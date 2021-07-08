@@ -232,7 +232,7 @@ button.secondary:hover {
 }
 
 .errMsg {
-  color: var(--secondary);
+  color: black;
   display: block;
   font-size: .5rem;
 }

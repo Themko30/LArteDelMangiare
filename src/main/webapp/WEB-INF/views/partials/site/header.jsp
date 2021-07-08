@@ -8,7 +8,7 @@
                     <p style="padding: 5px">Welcome ${accountSession.username}</p>
                 </c:when>
                 <c:otherwise>
-                    <p style="padding: 5px">Welcome Unregistered User!</p>
+                    <p style="padding: 5px">Welcome Guest!</p>
                 </c:otherwise>
             </c:choose>
             <a class="shopping-cart"
