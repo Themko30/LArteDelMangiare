@@ -5,14 +5,12 @@
 
 <form method="post"
       action="/LArteDelMangiare_war_exploded/accounts/signup"
-      class="app grid-x justify-center align-center">
+      class="app grid-x justify-center align-center"
+      id="form">
     <fieldset class="grid-y cell w50 login">
         <c:if test="${not empty alert}">
             <%@include file="../partials/alert.jsp" %>
         </c:if>
-
-        <h2>Register!</h2>
-
         <span>Username:</span>
         <label for="userName" class="field cell">
             <input id="userName" name="userName" placeholder="Username" type="text" required>

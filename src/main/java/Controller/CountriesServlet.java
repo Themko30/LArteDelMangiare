@@ -34,7 +34,7 @@ public class CountriesServlet extends Controller implements ErrorHandler {
       String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
       switch (path) {
         case "/":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           int intPage = parsePage(request);
           Paginator paginator = new Paginator(intPage, 30);
           int size = 0;
@@ -46,7 +46,7 @@ public class CountriesServlet extends Controller implements ErrorHandler {
           request.getRequestDispatcher(view("crm/countries")).forward(request, response);
           break;
         case "/show":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           validate(CommonValidator.validateId(request));
           int id = Integer.parseInt(request.getParameter("id"));
           Optional<Country> optionalCountry = countryDao.fetchCountry(id);
@@ -58,7 +58,7 @@ public class CountriesServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/create":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.getRequestDispatcher(view("crm/country")).forward(request, response);
           break;
         case "/api":
@@ -92,7 +92,7 @@ public class CountriesServlet extends Controller implements ErrorHandler {
       String path = getPath(request);
       switch (path) {
         case "/create":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.setAttribute("back", view("crm/country"));
           validate(CountryValidator.validateForm(request));
           Country country = new Country();

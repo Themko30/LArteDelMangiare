@@ -20,15 +20,18 @@
             <input id="fullName" name="fullName" placeholder="Name" type="text"
                    value="${product.prodName}">
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="price" class="field cell">
             <input id="price" name="price" placeholder="Price" type="text" value="${product.price}">
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="quantity" class="field cell">
             <input id="quantity" name="quantity" placeholder="Quantity" type="text"
                    value="${product.quantity}">
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="catId" class="field cell">
             <select name="catId" id="catId">
@@ -41,6 +44,7 @@
                 <option value="7">Sashimi</option>
             </select>
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="couId" class="field cell">
             <select name="couId" id="couId">
@@ -50,15 +54,18 @@
                 <option value="4">Eastern</option>
             </select>
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="description" class="field cell">
             <input id="description" name="description"
                    placeholder="Describe the product" type="text" value="${product.label}">
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="cover" class="field cell">
             <input id="cover" name="cover" type="file">
         </label>
+        <small class="errMsg cell"></small>
         <button type="submit" class=" cell btn primary">${isCreate ? 'Create' : 'Update'}</button>
     </fieldset>
 </form>

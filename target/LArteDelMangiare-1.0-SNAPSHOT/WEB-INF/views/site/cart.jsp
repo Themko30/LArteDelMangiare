@@ -46,13 +46,15 @@
                     </tbody>
                 </table>
                 <form method="post" action="/LArteDelMangiare_war_exploded/carts/createClient"
-                      class="cell">
+                      class="cell" id="form">
                     <select class="cell" name="circuit" id="circuit">
                         <option value="MasterCard">MasterCard</option>
                         <option value="Visa">Visa</option>
                         <option value="PayPal">PayPal</option>
                     </select>
+                    <small class="errMsg cell"></small>
                     <input type="number" name="number" id="number" placeholder="Card Number">
+                    <small class="errMsg cell"></small>
                     <button type="submit" class="primary btn">Complete Order</button>
                 </form>
             </c:otherwise>

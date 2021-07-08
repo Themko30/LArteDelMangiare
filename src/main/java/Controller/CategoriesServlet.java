@@ -39,7 +39,7 @@ public class CategoriesServlet extends Controller implements ErrorHandler {
       ;
       switch (path) {
         case "/":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           int intPage = parsePage(request);
           Paginator paginator = new Paginator(intPage, 30);
           int size = 0;
@@ -51,7 +51,7 @@ public class CategoriesServlet extends Controller implements ErrorHandler {
           request.getRequestDispatcher(view("crm/categories")).forward(request, response);
           break;
         case "/show":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           validate(CommonValidator.validateId(request));
           int id = Integer.parseInt(request.getParameter("id"));
           Optional<Category> optionalCategory = categoryDao.fetchCategory(id);
@@ -63,7 +63,7 @@ public class CategoriesServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/create":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.getRequestDispatcher(view("crm/category")).forward(request, response);
           break;
         case "/api":
@@ -97,7 +97,7 @@ public class CategoriesServlet extends Controller implements ErrorHandler {
       String path = getPath(request);
       switch (path) {
         case "/create":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.setAttribute("back", view("crm/category"));
           validate(CategoryValidator.validateForm(request));
           Category category = new Category();
@@ -117,9 +117,9 @@ public class CategoriesServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/update":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.setAttribute("back", view("crm/product"));
-          validate(ProductValidator.validateForm(request));
+          validate(CategoryValidator.validateForm(request));
           Category categoryup = new Category();
           categoryup.setId(Integer.parseInt(request.getParameter("id")));
           categoryup.setLabel(request.getParameter("label"));

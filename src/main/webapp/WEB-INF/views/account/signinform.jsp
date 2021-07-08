@@ -1,6 +1,6 @@
 <form class="app grid-x justify-center align-center"
       action="/LArteDelMangiare_war_exploded/accounts/signin"
-      method="post" id="signin">
+      method="post" id="form">
     <fieldset class="grid-y cell w50 login">
         <c:if test="${not empty alert}">
             <%@include file="../partials/alert.jsp" %>

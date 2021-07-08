@@ -29,10 +29,27 @@ final class AccountValidator {
         "address", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Address Between 5 and 30 Cha");
     validator.assertMatch(
         "email", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Email Between 5 and 30 Cha");
-    /*validator.assertMatch(
-    "password",
-    Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"),
-    "Password Must contain at least one number and one uppercase and lowercase letter, and at least 8 and max 16 characters");*/
+    validator.assertMatch(
+        "password",
+        Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"),
+        "Password Must contain at least one number and one uppercase and lowercase letter, and at least 8 and max 16 characters");
+    return validator;
+  }
+
+  static RequestValidator validateFormUpdate(HttpServletRequest request) {
+    RequestValidator validator = new RequestValidator(request);
+    validator.assertMatch(
+        "userName",
+        Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"),
+        "Username Between 5 and 30 Cha");
+    validator.assertMatch(
+        "firstName", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Name Between 5 and 30 Cha");
+    validator.assertMatch(
+        "lastName", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Surname Between 5 and 30 Cha");
+    validator.assertMatch(
+        "address", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Address Between 5 and 30 Cha");
+    validator.assertMatch(
+        "email", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Email Between 5 and 30 Cha");
     return validator;
   }
 }

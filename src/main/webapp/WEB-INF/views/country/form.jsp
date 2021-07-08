@@ -8,7 +8,8 @@
 </c:if>
 
 <form method="post"
-      action="/LArteDelMangiare_war_exploded/countries/${isCreate ? 'create' : 'update'}">
+      action="/LArteDelMangiare_war_exploded/countries/${isCreate ? 'create' : 'update'}" id="form"
+      id="form">
     <c:if test="${not isCreate}">
         <input type="hidden" name="id" value="${country.id}">
     </c:if>
@@ -19,6 +20,7 @@
             <input id="label" name="label" placeholder="Name" type="text"
                    value="${country.label}">
         </label>
+        <small class="errMsg cell"></small>
 
         <button type="submit" class=" cell btn primary">${isCreate ? 'Create' : 'Update'}</button>
     </fieldset>

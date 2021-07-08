@@ -12,7 +12,8 @@
 <div class=" body app grid-x justify-center align-center">
     <h1>INTERNAL ERROR!</h1>
     <br>
-    <a href="/LArteDelMangiare_war_exploded/pages/home?page=1">Back To Homepage...</a>
+    <a style="color: white" href="/LArteDelMangiare_war_exploded/pages/home?page=1">Back To
+        Homepage...</a>
 </div>
 </body>
 </html>

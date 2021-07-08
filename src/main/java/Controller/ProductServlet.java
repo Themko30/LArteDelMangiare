@@ -38,7 +38,7 @@ public class ProductServlet extends Controller implements ErrorHandler {
       String path = getPath(request);
       switch (path) {
         case "/":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           int intPage = parsePage(request);
           Paginator paginator = new Paginator(intPage, 30);
           int size = 0;
@@ -50,7 +50,7 @@ public class ProductServlet extends Controller implements ErrorHandler {
           request.getRequestDispatcher(view("crm/products")).forward(request, response);
           break;
         case "/show":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           validate(CommonValidator.validateId(request));
           int id = Integer.parseInt(request.getParameter("id"));
           Optional<Product> optionalProduct = productDao.fetchProduct(id);
@@ -73,7 +73,7 @@ public class ProductServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/create":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.getRequestDispatcher(view("crm/product")).forward(request, response);
           break;
       }
@@ -93,7 +93,7 @@ public class ProductServlet extends Controller implements ErrorHandler {
       String path = getPath(request);
       switch (path) {
         case "/create":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.setAttribute("back", view("crm/product"));
           validate(ProductValidator.validateForm(request));
           Product product = new Product();
@@ -121,7 +121,7 @@ public class ProductServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/update":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.setAttribute("back", view("crm/product"));
           validate(ProductValidator.validateForm(request));
           Product productup = new Product();
@@ -142,7 +142,9 @@ public class ProductServlet extends Controller implements ErrorHandler {
           request.setAttribute("product", productup);
           if (productDao.updateProduct(productup)) {
             String uploadRootup = getUploadPath();
-            productup.writeCover(uploadRootup, filePartup);
+            if (fileNameup == null) {
+              productup.writeCover(uploadRootup, filePartup);
+            }
             request.setAttribute("alert", new Alert(List.of("Product Updated!"), "success"));
             request.getRequestDispatcher(view("crm/product")).forward(request, response);
           } else {

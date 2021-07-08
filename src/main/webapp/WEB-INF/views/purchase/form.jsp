@@ -8,7 +8,7 @@
 </c:if>
 
 <form method="post"
-      action="/LArteDelMangiare_war_exploded/purchases/${isCreate ? 'create' : 'update'}">
+      action="/LArteDelMangiare_war_exploded/purchases/${isCreate ? 'create' : 'update'}" id="form">
     <c:if test="${not isCreate}">
         <input type="hidden" name="id" value="${purchase.id}">
     </c:if>
@@ -19,26 +19,31 @@
             <input id="cardCircuit" name="cardCircuit" placeholder="Card Circuit" type="text"
                    value="${purchase.cardCircuit}">
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="cardNumber" class="field cell">
             <input id="cardNumber" name="cardNumber" placeholder="Card Number"
                    type="text"
                    value="${purchase.panCard}">
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="Date" class="field cell">
             <input id="date" name="date" placeholder="Date" type="date" value="${purchase.created}">
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="total" class="field cell">
             <input id="total" name="total" placeholder="Total" type="text"
                    value="${purchase.total}">
         </label>
+        <small class="errMsg cell"></small>
 
         <label for="accountId" class="field cell">
             <input id="accountId" name="accountId" placeholder="Account Id" type="text"
                    value="${purchase.accountNum}">
         </label>
+        <small class="errMsg cell"></small>
 
         <button type="submit" class=" cell btn primary">${isCreate ? 'Create' : 'Update'}</button>
     </fieldset>

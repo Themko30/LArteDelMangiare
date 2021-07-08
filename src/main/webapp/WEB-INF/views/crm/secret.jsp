@@ -33,17 +33,19 @@
 </c:if>
 
 <form class="app grid-x justify-center align-center" action="${context}/accounts/secret"
-      method="post">
+      method="post" id="form">
     <fieldset class="grid-y cell w50 login">
         <h2>Login Admin Panel</h2>
         <span>Email</span>
         <label for="email" class="field">
             <input type="email" name="email" id="email" placeholder="Email">
         </label>
+        <small class="errMsg cell"></small>
         <span>Password</span>
         <label for="password" class="field">
             <input type="password" name="password" id="password" placeholder="Password">
         </label>
+        <small class="errMsg cell"></small>
         <button class="btn secondary" type="submit">Login</button>
     </fieldset>
 </form>

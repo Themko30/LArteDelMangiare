@@ -41,7 +41,7 @@ function dictionary() {
   };
 }
 
-const form = document.getElementById('signin')
+const form = document.getElementById('form')
 if (form) {
   validateForm(form);
 }

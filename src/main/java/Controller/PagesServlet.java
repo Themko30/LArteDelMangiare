@@ -54,6 +54,9 @@ public class PagesServlet extends Controller implements ErrorHandler {
         case "/info/privacy":
           request.getRequestDispatcher(view("site/privacy")).forward(request, response);
           break;
+        case "/info/aboutme":
+          request.getRequestDispatcher(view("site/aboutMe")).forward(request, response);
+          break;
         case "/products":
           int intPagePro = parsePage(request);
           Paginator paginatorProd = new Paginator(intPagePro, 30);
@@ -100,5 +103,8 @@ public class PagesServlet extends Controller implements ErrorHandler {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {}
+      throws ServletException, IOException {
+
+    doGet(request, response);
+  }
 }

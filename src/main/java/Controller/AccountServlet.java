@@ -34,7 +34,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
       String path = (request.getPathInfo() != null) ? request.getPathInfo() : "/";
       switch (path) {
         case "/":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           int intPage = parsePage(request);
           Paginator paginator = new Paginator(intPage, 30);
           int size = 0;
@@ -49,7 +49,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
           request.getRequestDispatcher(view("crm/account")).forward(request, response);
           break;
         case "/show":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           validate(CommonValidator.validateId(request));
           int id = Integer.parseInt(request.getParameter("id"));
           Optional<Account> optionalAccount = accountDao.fetchAccount(id);
@@ -68,9 +68,6 @@ public class AccountServlet extends Controller implements ErrorHandler {
           break;
         case "/signup":
           request.getRequestDispatcher(view("account/signupPage")).forward(request, response);
-          break;
-        case "/profile":
-          request.getRequestDispatcher(view("crm/profile")).forward(request, response);
           break;
         case "/logout":
           HttpSession session = request.getSession(false);
@@ -104,7 +101,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
       switch (path) {
         case "/secret":
           request.setAttribute("back", view("account/signinPage"));
-          /*validate(AccountValidator.validateSignin(request));*/
+          validate(AccountValidator.validateSignin(request));
           Account tmpAccount = new Account();
           tmpAccount.setEmail(request.getParameter("email"));
           tmpAccount.setPassword(request.getParameter("password"));
@@ -156,7 +153,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/create":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.setAttribute("back", view("crm/account"));
           validate(AccountValidator.validateForm(request));
           Account account = new Account();
@@ -176,9 +173,9 @@ public class AccountServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/update":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.setAttribute("back", view("crm/account"));
-          validate(AccountValidator.validateForm(request));
+          validate(AccountValidator.validateFormUpdate(request));
           Account accountup = new Account();
           accountup.setId(Integer.parseInt(request.getParameter("id")));
           accountup.setUsername(request.getParameter("userName"));

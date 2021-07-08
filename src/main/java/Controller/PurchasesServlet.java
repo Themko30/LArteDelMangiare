@@ -34,7 +34,7 @@ public class PurchasesServlet extends Controller implements ErrorHandler {
       String path = getPath(request);
       switch (path) {
         case "/":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           int intPage = parsePage(request);
           Paginator paginator = new Paginator(intPage, 30);
           int size = 0;
@@ -46,7 +46,7 @@ public class PurchasesServlet extends Controller implements ErrorHandler {
           request.getRequestDispatcher(view("crm/purchases")).forward(request, response);
           break;
         case "/show":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           validate(CommonValidator.validateId(request));
           int id = Integer.parseInt(request.getParameter("id"));
           Optional<Purchase> optionalPurchase = purchaseDao.fetchPurchase(id);
@@ -58,7 +58,7 @@ public class PurchasesServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/create":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.getRequestDispatcher(view("crm/purchase")).forward(request, response);
           break;
         case "/profile":
@@ -86,7 +86,7 @@ public class PurchasesServlet extends Controller implements ErrorHandler {
       String path = getPath(request);
       switch (path) {
         case "/create":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.setAttribute("back", view("crm/purchase"));
           validate(PurchaseValidator.validateForm(request));
           Purchase purchase = new Purchase();
@@ -104,7 +104,7 @@ public class PurchasesServlet extends Controller implements ErrorHandler {
           }
           break;
         case "/update":
-          /*authorize(request.getSession(false));*/
+          authorize(request.getSession(false));
           request.setAttribute("back", view("crm/purchase"));
           validate(PurchaseValidator.validateForm(request));
           Purchase purchaseup = new Purchase();

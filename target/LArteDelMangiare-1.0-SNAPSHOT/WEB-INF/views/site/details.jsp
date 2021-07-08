@@ -24,13 +24,14 @@
                 <p class="card-text">${product.label}</p>
                 <p class="card-text">${product.category.label}</p>
                 <p class="card-text">${product.country.label}</p>
-                <form method="post" action="/LArteDelMangiare_war_exploded/carts/add">
+                <form method="post" action="/LArteDelMangiare_war_exploded/carts/add" id="form">
                     <input type="hidden" name="id" value="${product.id}">
                     <label for="quantity" class="field cell">
                         <input type="number" id="quantity" name="quantity"
                                placeholder="Quantity" value="1">
                         <button type="submit" class="btn primary">Buy!</button>
                     </label>
+                    <small class="errMsg cell"></small>
                 </form>
             </div>
         </div>
