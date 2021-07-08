@@ -18,14 +18,14 @@
 
         <label for="label" class="field cell">
             <input id="label" name="label" placeholder="Label" type="text"
-                   value="${category.label}">
+                   value="${category.label}" required>
         </label>
         <small class="errMsg cell"></small>
 
         <label for="description" class="field cell">
             <input id="description" name="description" placeholder="Category Description"
                    type="text"
-                   value="${category.description}">
+                   value="${category.description}" required>
         </label>
         <small class="errMsg cell"></small>
 

@@ -100,7 +100,7 @@ public class AccountServlet extends Controller implements ErrorHandler {
       String path = getPath(request);
       switch (path) {
         case "/secret":
-          request.setAttribute("back", view("account/signinPage"));
+          request.setAttribute("back", view("crm/secret"));
           validate(AccountValidator.validateSignin(request));
           Account tmpAccount = new Account();
           tmpAccount.setEmail(request.getParameter("email"));

@@ -18,7 +18,7 @@
 
         <label for="label" class="field cell">
             <input id="label" name="label" placeholder="Name" type="text"
-                   value="${country.label}">
+                   value="${country.label}" required>
         </label>
         <small class="errMsg cell"></small>
 
