@@ -22,13 +22,19 @@ final class AccountValidator {
         Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"),
         "Username Between 5 and 30 Cha");
     validator.assertMatch(
-        "firstName", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Name Between 5 and 30 Cha");
+        "firstName",
+        Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"),
+        "Name Must Be In A Valid Format");
     validator.assertMatch(
-        "lastName", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Surname Between 5 and 30 Cha");
+        "lastName",
+        Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"),
+        "Surname Must Be In A Valid Format");
     validator.assertMatch(
-        "address", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Address Between 5 and 30 Cha");
+        "address",
+        Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"),
+        "Address Must Be In A Valid Format");
     validator.assertMatch(
-        "email", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Email Between 5 and 30 Cha");
+        "email", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Email Must Be In A Valid Format");
     validator.assertMatch(
         "password",
         Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"),
@@ -43,13 +49,19 @@ final class AccountValidator {
         Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"),
         "Username Between 5 and 30 Cha");
     validator.assertMatch(
-        "firstName", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Name Between 5 and 30 Cha");
+        "firstName",
+        Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"),
+        "Name Must Be In A Valid Format");
     validator.assertMatch(
-        "lastName", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Surname Between 5 and 30 Cha");
+        "lastName",
+        Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"),
+        "Surname Must Be In A Valid Format");
     validator.assertMatch(
-        "address", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Address Between 5 and 30 Cha");
+        "address",
+        Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"),
+        "Address Must Be In A Valid Format");
     validator.assertMatch(
-        "email", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Email Between 5 and 30 Cha");
+        "email", Pattern.compile("^(.|\\s)*[a-zA-Z]+(.|\\s)*$"), "Email Must Be In A Valid Format");
     return validator;
   }
 }
